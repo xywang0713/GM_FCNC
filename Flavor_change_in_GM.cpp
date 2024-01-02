@@ -14,68 +14,71 @@
 #include "clooptools.h"
 
 
-// 读取home目录下test.csv文件
-void Calculation_test(const std::string& filename) { 
-    // std::ifstream file("/home/test.csv");
-    // if (!file.is_open()) {
-    //     std::cerr << "Failed to open the file: " << filePath << std::endl;
-    //     return 1;
-    // }
-
-    // // 跳过标题行
-    // std::string line;
-    // std::getline(file, line);
-
-    // //输出到home目录下的try.csv文件里
-    // std::ofstream outputFile("home/try.csv");
-    // if (!outputFile.is_open()) {
-    //     std::cerr << "Failed to create the output file" << std::endl;
-    //     return;
-    // }
-
-
-    // while (std::getline(file, line)) {
-    //     std::stringstream iss(line);
-    //     std::string val;
-    //     std::vector<double> values;
-    //     while (std::getline(iss, val, ',')) {
-    //         values.push_back(std::stod(val));
-    //     }
-
-    //     MH5 = values[0];
-    //     sH = values[1];
-    //     thetaH = std::asin(sH); 
-    //     M1 = values[6];
-    //     M2 = values[7];
-    //     MH3 = values[9];
-
-            Fa_ij =  xx
-
-            xi_ij_L = 
-            xi_ij_R = 
-            outputFile << MH5 << "  " << MH3 << xi_ij_L << xi_ij_R<<std::endl;
-
-    //     }
-}
-// 定义其他变量
+// 定义全局变量
 std::complex<double> alpha(1/137, 0.0), SW(0.2223, 0.0), vacuum(246.0, 0.0);
 double MW = 80.399;
-double MH5 = 10;
-double MH3 = 50;
-double sH = 0.01;
-double thetaH = std::asin(sH);
-double M1 = 100;
-double M2 = 200;
 
-// 计算 LAMBDA_3()  函数
-std::complex<double> LAMBDA_3() {
-    return (std::cos(thetaH) * std::cos(thetaH) * (-3.0 * std::sin(thetaH) * MH3 * MH3 + std::sqrt(2.0) * M1 * vacuum) + std::sin(thetaH) * (MH5 * MH5 - 3.0 * std::sqrt(2.0) * M2 * std::sin(thetaH) * vacuum)) / (vacuum * std::sin(thetaH) * std::sin(thetaH) * std::sin(thetaH));
+//写class
+class GM_model{
+public:
+    double MH5;
+    double MH3;
+    double sH;
+    double thetaH;
+    double M1;
+    double M2;
+
+
+    void read_Data(){                           // 定义一个名为read_Data的void类型的函数
+        std::ifstream file("home/test.csv")     // 用ifstream类打开home/test.csv
+        if (file.is_open()){                    // 如果文件成功打开       
+        std::string line;                       // 定义一个名为line的string类型变量
+        int lineCount = 0;                      // 定义一个名为lineCount的int类型变量并赋值为0
+        while (std::getline(file,line)){        // 当从file中读取一行内容存入line中时
+            if (lineCount == 1){                // 如果行数为1
+                std::istringstream iss(line);   // 使用istringstream类根据line创建一个名为iss的对象
+                std:vector<double> values;      // 定义一个名为values的vector类型变量
+                double value;                   // 定义一个名为value的double类型变量
+                while (iss >> value) {          // 当从iss中读取值并成功时
+                    values.push_back(value);    // 将value添加到values的末尾
+                }
+                MH5 = values[0];
+                sH = values[1];
+                thetaH = std::asin(sH); 
+                M1 = values[6];
+                M2 = values[7];
+                MH3 = values[9];                // 将values中的值赋给变量
+            }
+            lineCount++;                        // 行数加1
+        }
+        file.close();
+        }       
+    }
+
+
+    // 计算 LAMBDA_3()  函数
+    std::complex<double> LAMBDA_3() {
+         return (std::cos(thetaH) * std::cos(thetaH) * (-3.0 * std::sin(thetaH) * MH3 * MH3 + std::sqrt(2.0) * M1 * vacuum) + std::sin(thetaH) * (MH5 * MH5 - 3.0 * std::sqrt(2.0) * M2 * std::sin(thetaH) * vacuum)) / (vacuum * std::sin(thetaH) * std::sin(thetaH) * std::sin(thetaH));
+    }
+
+    // 计算 LAMBDA_5() 函数
+    std::complex<double> LAMBDA_5() {
+         return (2.0 * std::sin(thetaH) * MH3 * MH3 - std::sqrt(2.0) * M1 * vacuum) / (vacuum * std::sin(thetaH));
+    }
+
+//Potential里的参数
+public:
+    double LAMBDA_1;
+    double LAMBDA_2;
+    double LAMBDA_3();
+    double LAMBDA_4;
+    double LAMBDA_5();
+    double MU12;
+    double MU22;
+    double M1;
+    double M2;
 }
 
-// 计算 LAMBDA_5() 函数
-std::complex<double> LAMBDA_5() {
-    return (2.0 * std::sin(thetaH) * MH3 * MH3 - std::sqrt(2.0) * M1 * vacuum) / (vacuum * std::sin(thetaH));
-}
 
 // 计算 yd(z) 的函数
 std::complex<double> set_yd_z(int z) {
