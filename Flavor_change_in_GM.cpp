@@ -140,25 +140,25 @@ double set_Mu_w(int w) {
 
 
 // 计算 CKM矩阵V[u,t] 的函数
- std::complex<double> V(int u, int t) {
+ std::complex<double> VCKM(int u, int t) {
      if (u == 1 && t == 1) {
-         return 0.974688;
+         return 0.974352;
      } else if (u == 1 && t == 2) {
-         return 0.225;
+         return 0.224998;
      } else if (u == 1 && t == 3) {
-         return std::complex<double>(0.00157575, -0.00344881);
+         return std::complex<double>(0.0015275, -0.00335899);
      } else if (u == 2 && t == 1) {
-         return -0.225;
+         return std::complex<double>(-0.224865, -0.000136871);
      } else if (u == 2 && t == 2) {
-         return 0.974688;
+         return std::complex<double>(0.973492, -0.0000316065 );
      } else if (u == 2 && t == 3) {
-         return 0.0418163;
+         return 0.0418197;
      } else if (u == 3 && t == 1 ) {
-         return std::complex<double>(0.00783291, -0.00344881); 
+         return std::complex<double>(0.00792247, -0.00327); 
      } else if (u == 3 && t == 2 ) {
-         return -0.0418163; 
+         return std::complex<double>(-0.0410911, -0.000755113);  
      } else if (u == 3 && t == 3 ) { 
-         return 1.0;
+         return 0.999118;
      } else {
          std::cerr << "Invalid indices u, t" << std::endl;
          return 0;
@@ -166,66 +166,57 @@ double set_Mu_w(int w) {
  }
 
 // 计算 CKMC矩阵VC[r,s] 的函数
- std::complex<double> VC(int r, int s) {
+ std::complex<double> VCKMC(int r, int s) {
      if (r == 1 && s == 1) {
-         return 0.974688;
+         return 0.974352;
      } else if (r == 1 && s == 2) {
-         return -0.225;
+         return std::complex<double>(-0.224865 , 0.000136871);
      } else if (r == 1 && s == 3) {
-         return std::complex<double>(0.00783291 , 0.00344881);
+         return std::complex<double>(0.00792247 , 0.00327);
      } else if (r == 2 && s == 1) {
-         return 0.225;
+         return 0.224998;
      } else if (r == 2 && s == 2) {
-         return 0.974688;
+         return std::complex<double>(0.973492 , 0.0000316065);
      } else if (r == 2 && s == 3) {
-         return -0.0418163;
+         return std::complex<double>(-0.0410911 , 0.000755113);
      } else if (r == 3 && s == 1 ) {
-         return std::complex<double>(0.00157575 , 0.00344881); 
+         return std::complex<double>(0.0015275 , 0.00335899); 
      } else if (r == 3 && s == 2 ) {
-         return 0.0418163; 
+         return 0.0418197; 
      } else if (r == 3 && s == 3 ) { 
-         return 1.0;
+         return 0.999118;
      } else {
          std::cerr << "Invalid indices r, s" << std::endl;
          return 0;
      }
  }
 
-// // 计算 CKM矩阵,CKMC矩阵
-// std::complex<double> V[3][3] = {{0.974688, 0.225, std::complex<double>(0.00157575, -0.00344881)},
-//                                {-0.225, 0.974688, 0.0418163}, 
-//                                {std::complex<double>(0.00783291, -0.00344881), -0.0418163, 1}};
-// std::complex<double> VC[3][3] = {{0.974688, -0.225, std::complex<double>(0.00783291 , 0.00344881)}, 
-//                                 {0.225, 0.974688, -0.0418163}, 
-//                                 {std::complex<double>(0.00157575 , 0.00344881), 0.0418163, 1}};
-
-// (RR_Ba*Ba+RR_Bb*Bb+Ca系数*Ca+Cb系数*Cb+Cc系数*Cc+Cd系数*Cd)*P_R+(Ba系数*Ba+Bb系数*Bb+Ca系数*Ca+Cb系数*Cb+Cc系数*Cc+Cd系数*Cd)*P_L
 
 // P_R右手
 // （一）计算 RR_Ba 的函数
 std::complex<double> RR_Ba (int i, int j){
-    return (alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(i) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (V(1,i) * VC(1,j) + V(2,i) * VC(2,j) + V(3,i) * VC(3,j));
+    return (alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(i) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (VCKM(1,i) * VCKMC(1,j) + VCKM(2,i) * VCKMC(2,j) + VCKM(3,i) * VCKMC(3,j));
 }
 
 // （二）计算 RR_Bb 的函数
 std::complex<double> RR_Bb (int i, int j){
-    return (-alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(i) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (V(1,i) * VC(1,j) + V(2,i) * VC(2,j) + V(3,i) * VC(3,j));
+    return (-alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(i) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (VCKM(1,i) * VCKMC(1,j) + VCKM(2,i) * VCKMC(2,j) + VCKM(3,i) * VCKMC(3,j));
 }
 
 // 计算 R_Ca 的函数
 //  (三) 计算 R_Ca0_k1 的函数
 std::complex<double> R_Ca0_k1 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(1) * set_yd_z(i) * set_yu_y(1)) * V(1,i) * VC(1,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(1) * set_yd_z(i) * set_yu_y(1)) * VCKM(1,i) * VCKMC(1,j));
 }
 
 //  (四) 计算 R_Ca0_k2 的函数
 std::complex<double> R_Ca0_k2 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(2) * set_yd_z(i) * set_yu_y(2)) * V(2,i) * VC(2,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(2) * set_yd_z(i) * set_yu_y(2)) * VCKM(2,i) * VCKMC(2,j));
 }
 
 //  （五） 计算 R_Ca0_k3 的函数
 std::complex<double> R_Ca0_k3 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(3) * set_yd_z(i) * set_yu_y(3)) * V(3,i) * VC(3 ,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(3) * set_yd_z(i) * set_yu_y(3)) * VCKM(3,i) * VCKMC(3 ,j));
 }
 
 // // （）计算 R_Ca0 的函数
@@ -235,17 +226,17 @@ std::complex<double> R_Ca0_k3 (int i, int j){
 
 // （六）计算 R_Ca1_k1 的函数
 std::complex<double> R_Ca1_k1 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(1) * set_yu_y(1)) * V(1,i) * VC(1,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(1) * set_yu_y(1)) * VCKM(1,i) * VCKMC(1,j));
 }
 
 // （七）计算 R_Ca1_k2 的函数
 std::complex<double> R_Ca1_k2 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(2) * set_yu_y(2)) * V(2,i) * VC(2,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(2) * set_yu_y(2)) * VCKM(2,i) * VCKMC(2,j));
 }
 
 // （八）计算 R_Ca1_k3 的函数
 std::complex<double> R_Ca1_k3 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(3) * set_yu_y(3)) * V(3,i) * VC(3,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * ((set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(3) * set_yu_y(3)) * VCKM(3,i) * VCKMC(3,j));
 }
 
 // // （）计算 R_Ca1 的函数
@@ -255,17 +246,17 @@ std::complex<double> R_Ca1_k3 (int i, int j){
 
 // （九）计算 R_Ca2_k1 的函数
 std::complex<double> R_Ca2_k1 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) *V(1,i) * VC(1,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) *VCKM(1,i) * VCKMC(1,j));
 }
 
 // （十）计算 R_Ca2_k2 的函数
 std::complex<double> R_Ca2_k2 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) *V(2,i) * VC(2,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) *VCKM(2,i) * VCKMC(2,j));
 }
 
 // （十一）计算 R_Ca2_k3 的函数
 std::complex<double> R_Ca2_k3 (int i, int j){
-    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) *V(3,i) * VC(3,j));
+    return (std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0) * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum)) / (32.0 * std::sqrt(3.0) * M_PI *M_PI)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) *VCKM(3,i) * VCKMC(3,j));
 }
 // // （）计算 R_Ca2 的函数
 // std::complex<double> R_Ca2 (int i, int j){
@@ -279,7 +270,7 @@ std::complex<double> R_Cb0_k1 (int i, int j){
     return (std::cos(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(1) * set_yd_z(i) * set_yu_y(1))\
     -2 * std::sqrt(2.0) * alpha * M_PI * std::sin(thetaH) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - (set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i)) * set_yd_z(i) + set_Mu_w(1) *set_Mu_w(1) * set_yd_z(i) + set_Md_x(i) * set_Mu_w(1) * set_yu_y(1)))\
-           * V(1,i) * VC(1,j);
+           * VCKM(1,i) * VCKMC(1,j);
 }
 
 //  （十三）计算 R_Cb0_k2 的函数
@@ -287,7 +278,7 @@ std::complex<double> R_Cb0_k2 (int i, int j){
     return (std::cos(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(2) * set_yd_z(i) * set_yu_y(2))\
     -2 * std::sqrt(2.0) * alpha * M_PI * std::sin(thetaH) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - (set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i)) * set_yd_z(i) + set_Mu_w(2) *set_Mu_w(2) * set_yd_z(i) + set_Md_x(i) * set_Mu_w(2) * set_yu_y(2)))\
-           * V(2,i) * VC(2,j);
+           * VCKM(2,i) * VCKMC(2,j);
 }
 
 //  （十四）计算 R_Cb0_k3 的函数
@@ -295,7 +286,7 @@ std::complex<double> R_Cb0_k3 (int i, int j){
     return (std::cos(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(3) * set_yd_z(i) * set_yu_y(3))\
     -2 * std::sqrt(2.0) * alpha * M_PI * std::sin(thetaH) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - (set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i)) * set_yd_z(i) + set_Mu_w(3) *set_Mu_w(3) * set_yd_z(i) + set_Md_x(i) * set_Mu_w(3) * set_yu_y(3)))\
-           * V(3,i) * VC(3,j);
+           * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 R_Cb0 总和
@@ -310,7 +301,7 @@ std::complex<double> R_Cb1_k1 (int i, int j){
     * (-16.0 * alpha * alpha * set_Md_x(i) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * std::cos(thetaH) * std::sin(thetaH) * SW * SW * (set_Md_x(j) * set_Md_x(i) * set_yd_z(j) + (set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5) * set_yd_z(i) - 2.0 * set_Md_x(i) * set_Mu_w(1) * set_yu_y(1))\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(1) * set_yu_y(1)))\
-           * V(1,i) * VC(1,j);
+           * VCKM(1,i) * VCKMC(1,j);
 } 
 
 //  （十六）计算 R_Cb1_k2 的函数
@@ -319,7 +310,7 @@ std::complex<double> R_Cb1_k2 (int i, int j){
     *(-16.0 * alpha * alpha * set_Md_x(i) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * std::cos(thetaH) * std::sin(thetaH) * SW * SW * (set_Md_x(j) * set_Md_x(i) * set_yd_z(j) + (set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5) * set_yd_z(i) - 2.0 * set_Md_x(i) * set_Mu_w(2) * set_yu_y(2))\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(2) * set_yu_y(2)))\
-          * V(2,i) * VC(2,j); 
+          * VCKM(2,i) * VCKMC(2,j); 
 }
 
 //  （十七）计算 R_Cb1_k3 的函数
@@ -328,7 +319,7 @@ std::complex<double> R_Cb1_k3 (int i, int j){
     * (-16.0 * alpha * alpha * set_Md_x(i) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * std::cos(thetaH) * std::sin(thetaH) * SW * SW * (set_Md_x(j) * set_Md_x(i) * set_yd_z(j) + (set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5) * set_yd_z(i) - 2.0 * set_Md_x(i) * set_Mu_w(3) * set_yu_y(3))\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(3) * set_yu_y(3)))\
-          * V(3,i) * VC(3,j); 
+          * VCKM(3,i) * VCKMC(3,j); 
 }
 
 // // （）计算 R_Cb1 总和
@@ -342,7 +333,7 @@ std::complex<double> R_Cb2_k1 (int i, int j){
     return (std::cos(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * std::sin(thetaH) * (-set_Md_x(j) * set_Md_x(i) * set_yd_z(j) + (set_Md_x(j) *set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i)) * set_yd_z(i)))\
-          * V(1,i) * VC(1,j);
+          * VCKM(1,i) * VCKMC(1,j);
 }
 
 //  （十九）计算 R_Cb2_k2 的函数
@@ -350,7 +341,7 @@ std::complex<double> R_Cb2_k2 (int i, int j){
     return (std::cos(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * std::sin(thetaH) * (-set_Md_x(j) * set_Md_x(i) * set_yd_z(j) + (set_Md_x(j) *set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i)) * set_yd_z(i)))\
-          * V(2,i) * VC(2,j);
+          * VCKM(2,i) * VCKMC(2,j);
 }
 
 //  （二十）计算 R_Cb2_k3 的函数
@@ -358,7 +349,7 @@ std::complex<double> R_Cb2_k3 (int i, int j){
     return (std::cos(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * std::sin(thetaH) * (-set_Md_x(j) * set_Md_x(i) * set_yd_z(j) + (set_Md_x(j) *set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i)) * set_yd_z(i)))\
-           * V(3,i) * VC(3,j); 
+           * VCKM(3,i) * VCKMC(3,j); 
 }
 
 // // （）计算 R_Cb2 总和
@@ -373,7 +364,7 @@ std::complex<double> R_Cc0_k1 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     *(std::cos(thetaH) * SW *SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(1) * set_yd_z(i) * set_yu_y(1))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * ((-set_Md_x(j) * set_Md_x(j) + 2.0 * MH5 * MH5 - 2.0 * set_Md_x(i) * set_Md_x(i) + set_Mu_w(1) * set_Mu_w(1)) * set_yd_z(i) + 2.0 * set_Md_x(i) * set_Mu_w(1) *set_yu_y(1)))\
-           * V(1,i) * VC(1,j);
+           * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （二十二）计算 R_Cc0_k2 的函数
@@ -381,7 +372,7 @@ std::complex<double> R_Cc0_k2 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     *(std::cos(thetaH) * SW *SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(2) * set_yd_z(i) * set_yu_y(2))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * ((-set_Md_x(j) * set_Md_x(j) + 2.0 * MH5 * MH5 - 2.0 * set_Md_x(i) * set_Md_x(i) + set_Mu_w(2) * set_Mu_w(2)) * set_yd_z(i) + 2.0 * set_Md_x(i) * set_Mu_w(2) *set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （二十三）计算 R_Cc0_k3 的函数
@@ -389,7 +380,7 @@ std::complex<double> R_Cc0_k3 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (std::cos(thetaH) * SW *SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 +(-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(3) * set_yd_z(i) * set_yu_y(3))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * ((-set_Md_x(j) * set_Md_x(j) + 2.0 * MH5 * MH5 - 2.0 * set_Md_x(i) * set_Md_x(i) + set_Mu_w(3) * set_Mu_w(3)) * set_yd_z(i) + 2.0 * set_Md_x(i) * set_Mu_w(3) *set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 R_Cc0 总和
@@ -403,7 +394,7 @@ std::complex<double> R_Cc1_k1 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (-((set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5) * set_yd_z(i) + set_Md_x(i) * set_Mu_w(1) * set_yu_y(1)))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(1)*set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 //  （二十五）计算 R_Cc1_k2 的函数
@@ -411,7 +402,7 @@ std::complex<double> R_Cc1_k2 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (-((set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5) * set_yd_z(i) + set_Md_x(i) * set_Mu_w(2) * set_yu_y(2)))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(2)*set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 //  （二十六）计算 R_Cc1_k3 的函数
@@ -419,7 +410,7 @@ std::complex<double> R_Cc1_k3 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (-((set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5) * set_yd_z(i) + set_Md_x(i) * set_Mu_w(3) * set_yu_y(3)))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j) - set_Md_x(i) * set_yu_y(3)*set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 R_Cc1 总和
@@ -433,7 +424,7 @@ std::complex<double> R_Cc2_k1 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (-2.0 * std::sqrt(2.0) * alpha * M_PI *(set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 //  （二十八）计算 R_Cc1_k2 的函数
@@ -441,7 +432,7 @@ std::complex<double> R_Cc2_k2 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (-2.0 * std::sqrt(2.0) * alpha * M_PI *(set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 //  （二十九）计算 R_Cc2_k3 的函数
@@ -449,7 +440,7 @@ std::complex<double> R_Cc2_k3 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32* std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (-2.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + 2.0 * set_Md_x(i) * set_Md_x(i))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() +LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yd_z(i) * set_yd_z(j)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 R_Cc2 总和
@@ -463,7 +454,7 @@ std::complex<double> R_Cd0_k1 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Mu_w(1) * set_yd_z(i) * set_yu_y(1) + set_Md_x(i) * set_yu_y(1) * set_yu_y(1))\
     + 4.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 //  （三十一）计算 R_Cd0_k2 的函数
@@ -471,7 +462,7 @@ std::complex<double> R_Cd0_k2 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Mu_w(2) * set_yd_z(i) * set_yu_y(2) + set_Md_x(i) * set_yu_y(2) *set_yu_y(2))\
     + 4.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 //  （三十二）计算 R_Cd0_k3 的函数
@@ -479,7 +470,7 @@ std::complex<double> R_Cd0_k3 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW *SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Mu_w(3) * set_yd_z(i) * set_yu_y(3) + set_Md_x(i) * set_yu_y(3) *set_yu_y(3))\
     + 4.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 R_Cd0 总和
@@ -493,7 +484,7 @@ std::complex<double> R_Cd1_k1 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) *set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(1) * set_yu_y(1))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Md_x(j) * set_yd_z(i) * set_yd_z(j) + set_Md_x(i) * set_yu_y(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j); 
+        * VCKM(1,i) * VCKMC(1,j); 
 }
 
 //  （三十四）计算 R_Cd1_k2 的函数
@@ -501,7 +492,7 @@ std::complex<double> R_Cd1_k2 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(2) * set_yu_y(2))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Md_x(j) * set_yd_z(i) * set_yd_z(j) + set_Md_x(i) * set_yu_y(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 //  （三十五）计算 R_Cd1_k3 的函数
@@ -509,7 +500,7 @@ std::complex<double> R_Cd1_k3 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(3) * set_yu_y(3))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Md_x(j) * set_yd_z(i) * set_yd_z(j) + set_Md_x(i) * set_yu_y(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 R_Cd1 总和
@@ -523,7 +514,7 @@ std::complex<double> R_Cd2_k1 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yu_y(1) * set_yu_y(1))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * (2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 //  （三十七）计算 R_Cd2_k2 的函数
@@ -531,7 +522,7 @@ std::complex<double> R_Cd2_k2 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yu_y(2) * set_yu_y(2))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * (2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 //  （三十八）计算 R_Cd2_k3 的函数
@@ -539,41 +530,41 @@ std::complex<double> R_Cd2_k3 (int i, int j){
     return (std::cos(thetaH) * std::sin(thetaH) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yu_y(3) * set_yu_y(3))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * (2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Mu_w(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
-//  （）计算 R_Cd2 总和
-std::complex<double> R_Cd2 (int i, int j){
-    return R_Cd2_k1(i,j)+R_Cd2_k2(i,j)+R_Cd2_k3(i,j);
-}
+// //  （）计算 R_Cd2 总和
+// std::complex<double> R_Cd2 (int i, int j){
+//     return R_Cd2_k1(i,j)+R_Cd2_k2(i,j)+R_Cd2_k3(i,j);
+// }
 
 
 // P_L左手
 // （壹）计算 LL_Ba 的函数
 std::complex<double> LL_Ba (int i, int j){
-    return (alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(j) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (V(1,i) * VC(1,j) + V(2,i) * VC(2,j) + V(3,i) * VC(3,j));
+    return (alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(j) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (VCKM(1,i) * VCKMC(1,j) + VCKM(2,i) * VCKMC(2,j) + VCKM(3,i) * VCKMC(3,j));
 }
 
 // （贰）计算 LL_Bb 的函数
 std::complex<double> LL_Bb (int i, int j){
-    return (-alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(j) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (V(1,i) * VC(1,j) + V(2,i) * VC(2,j) + V(3,i) * VC(3,j));
+    return (-alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(j) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (VCKM(1,i) * VCKMC(1,j) + VCKM(2,i) * VCKMC(2,j) + VCKM(3,i) * VCKMC(3,j));
 }
 
 // 计算 L_Ca 的函数
 // 计算 L_Ca0 = L_Ca0_k1+L_Ca0_k2+L_Ca0_k3 的函数
 // （叁）计算 L_Ca0_k1 的函数
 std::complex<double> L_Ca0_k1 (int i, int j){
-    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Mu_w(1) * set_yd_z(j) * set_yu_y(1) - set_Md_x(j) * set_yu_y(1) * set_yu_y(1)) * V(1,i) * VC(1,j);
+    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Mu_w(1) * set_yd_z(j) * set_yu_y(1) - set_Md_x(j) * set_yu_y(1) * set_yu_y(1)) * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （肆）计算 L_Ca0_k2 的函数
 std::complex<double> L_Ca0_k2 (int i, int j){
-    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Mu_w(2) * set_yd_z(j) * set_yu_y(2) - set_Md_x(j) * set_yu_y(2) * set_yu_y(2)) * V(2,i) * VC(2,j);
+    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Mu_w(2) * set_yd_z(j) * set_yu_y(2) - set_Md_x(j) * set_yu_y(2) * set_yu_y(2)) * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （伍）计算 L_Ca0_k3 的函数
 std::complex<double> L_Ca0_k3 (int i, int j){
-    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Mu_w(3) * set_yd_z(j) * set_yu_y(3) - set_Md_x(j) * set_yu_y(3) * set_yu_y(3)) * V(3,i) * VC(3,j);
+    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Mu_w(3) * set_yd_z(j) * set_yu_y(3) - set_Md_x(j) * set_yu_y(3) * set_yu_y(3)) * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Ca0 总和
@@ -583,37 +574,37 @@ std::complex<double> L_Ca0_k3 (int i, int j){
 
 // （陆）计算 L_Ca1_k1 的函数
 std::complex<double> L_Ca1_k1 (int i, int j){
-    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 *LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(1) * set_yu_y(1)) * V(1,i) * VC(1,j);
+    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 *LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(1) * set_yu_y(1)) * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （柒）计算 L_Ca1_k2 的函数
 std::complex<double> L_Ca1_k2 (int i, int j){
-    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 *LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(2) * set_yu_y(2)) * V(2,i) * VC(2,j);
+    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 *LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(2) * set_yu_y(2)) * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （捌）计算 L_Ca1_k3 的函数
 std::complex<double> L_Ca1_k3 (int i, int j){
-    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 *LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(3) * set_yu_y(3)) * V(3,i) * VC(3,j);
+    return ((-std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 *LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(3) * set_yu_y(3)) * VCKM(3,i) * VCKMC(3,j);
 }
 
-// （）计算 L_Ca1 总和
-std::complex<double> L_Ca1 (int i, int j){
-    return L_Ca1_k1(i,j)+L_Ca1_k2(i,j)+L_Ca1_k3(i,j);
-}
+// // （）计算 L_Ca1 总和
+// std::complex<double> L_Ca1 (int i, int j){
+//     return L_Ca1_k1(i,j)+L_Ca1_k2(i,j)+L_Ca1_k3(i,j);
+// }
 
 // （玖）计算 L_Ca2_k1 的函数
 std::complex<double> L_Ca2_k1 (int i, int j){
-    return ((std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(j) * set_yu_y(1) * set_yu_y(1)) * V(1,i) * VC(1,j);
+    return ((std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(j) * set_yu_y(1) * set_yu_y(1)) * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （拾）计算 L_Ca2_k2 的函数
 std::complex<double> L_Ca2_k2 (int i, int j){
-    return ((std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(j) * set_yu_y(2) * set_yu_y(2)) * V(2,i) * VC(2,j);
+    return ((std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(j) * set_yu_y(2) * set_yu_y(2)) * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （拾壹）计算 L_Ca2_k3 的函数
 std::complex<double> L_Ca2_k3 (int i, int j){
-    return ((std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(j) * set_yu_y(3) * set_yu_y(3)) * V(3,i) * VC(3,j);
+    return ((std::sin(thetaH) * std::sin(thetaH) * (2.0 * std::cos(thetaH) * std::cos(thetaH) * (3.0 * std::sqrt(2.0) * M2 + (LAMBDA_3() - 2.0 * LAMBDA_5()) * std::sin(thetaH) * vacuum) + std::sin(thetaH) * std::sin(thetaH) * (std::sqrt(2.0)  * M1 - LAMBDA_5() * std::sin(thetaH) * vacuum))) / (32.0 * std::sqrt(3.0) * M_PI * M_PI)) * (set_Md_x(j) * set_yu_y(3) * set_yu_y(3)) * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Ca2 总和
@@ -629,7 +620,7 @@ std::complex<double> L_Cb0_k1 (int i, int j){
     * (16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW *(2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0)  * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (-set_Mu_w(1) * set_yd_z(j) * set_yu_y(1) + set_Md_x(j) * set_yu_y(1) * set_yu_y(1))\
     + 2.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (2.0 * set_Md_x(j) * set_Md_x(j) * set_yd_z(j) - set_Mu_w(1) * set_Mu_w(1) * set_yd_z(j) - 2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + set_Md_x(j) * set_Mu_w(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （拾叁）计算 L_Cb0_k2 的函数
@@ -638,7 +629,7 @@ std::complex<double> L_Cb0_k2 (int i, int j){
     * (16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0)  * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) *vacuum)) * (-set_Mu_w(2) * set_yd_z(j) * set_yu_y(2) + set_Md_x(j) * set_yu_y(2) * set_yu_y(2))\
     + 2.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (2.0 * set_Md_x(j) * set_Md_x(j) * set_yd_z(j) - set_Mu_w(2) * set_Mu_w(2) * set_yd_z(j) - 2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + set_Md_x(j) * set_Mu_w(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （拾肆）计算 L_Cb0_k3 的函数
@@ -647,7 +638,7 @@ std::complex<double> L_Cb0_k3 (int i, int j){
     * (16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW *(2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0)  * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (-set_Mu_w(3) * set_yd_z(j) * set_yu_y(3) + set_Md_x(j) * set_yu_y(3) * set_yu_y(3))\
     + 2.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (2.0 * set_Md_x(j) * set_Md_x(j) * set_yd_z(j) - set_Mu_w(3) * set_Mu_w(3) * set_yd_z(j) - 2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + set_Md_x(j) * set_Mu_w(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Cb0 总和
@@ -661,7 +652,7 @@ std::complex<double> L_Cb1_k1 (int i, int j){
     *(16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + 2.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (2.0 * MH5 * MH5 * set_yd_z(j) - set_Md_x(i) * set_Md_x(i) * set_yd_z(i) - set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + 2.0 * set_Md_x(j) * set_Mu_w(1) * set_yu_y(1))\
     - std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （拾陆）计算 L_Cb1_k2 的函数
@@ -670,7 +661,7 @@ std::complex<double> L_Cb1_k2 (int i, int j){
     *(16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + 2.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (2.0 * MH5 * MH5 * set_yd_z(j) - set_Md_x(i) * set_Md_x(i) * set_yd_z(i) - set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + 2.0 * set_Md_x(j) * set_Mu_w(2) * set_yu_y(2))\
     - std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （拾柒）计算 L_Cb1_k3 的函数
@@ -679,7 +670,7 @@ std::complex<double> L_Cb1_k3 (int i, int j){
     *(16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + 2.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (2.0 * MH5 * MH5 * set_yd_z(j) - set_Md_x(i) * set_Md_x(i) * set_yd_z(i) - set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + 2.0 * set_Md_x(j) * set_Mu_w(3) * set_yu_y(3))\
     - std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Cb1 总和
@@ -693,7 +684,7 @@ std::complex<double> L_Cb2_k1 (int i, int j){
     *(16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yu_y(1) * set_yu_y(1))\
     + 4.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (set_Md_x(j) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + set_Md_x(j) * set_Mu_w(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （拾玖）计算 L_Cb2_k2 的函数
@@ -702,7 +693,7 @@ std::complex<double> L_Cb2_k2 (int i, int j){
     *(16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yu_y(2) * set_yu_y(2))\
     + 4.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (set_Md_x(j) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + set_Md_x(j) * set_Mu_w(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （貳拾）计算 L_Cb2_k3 的函数
@@ -711,7 +702,7 @@ std::complex<double> L_Cb2_k3 (int i, int j){
     *(16.0 * alpha * alpha * set_Md_x(j) * M_PI * M_PI * std::sin(thetaH) * vacuum\
     + std::cos(thetaH) * std::cos(thetaH) * SW * SW * SW * SW * (2.0 * std::sin(thetaH) * std::sin(thetaH) * (3.0 * std::sqrt(2.0) * M2 + LAMBDA_3() * std::sin(thetaH) * vacuum) + std::cos(thetaH) * std::cos(thetaH) * (std::sqrt(2.0) * M1 + 3.0 * LAMBDA_5() * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yu_y(3) * set_yu_y(3))\
     + 4.0 * std::sqrt(2.0) * alpha * std::cos(thetaH) * M_PI * std::sin(thetaH) * SW * SW * (set_Md_x(j) * set_Md_x(j) * set_yd_z(j) - set_Md_x(i) * set_Md_x(j) * set_yd_z(i) + set_Md_x(j) * set_Mu_w(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Cb2 总和
@@ -726,7 +717,7 @@ std::complex<double> L_Cc0_k1 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH))/(32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW *(-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Mu_w(1) * set_yd_z(j) * set_yu_y(1) + set_Md_x(j) * set_yu_y(1) * set_yu_y(1))\
     + 4.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(1) * set_yu_y(1)))\
-       * V(1,i) * VC(1,j); 
+       * VCKM(1,i) * VCKMC(1,j); 
 }
 
 // （貳拾貳）计算 L_Cc0_k2 的函数
@@ -734,7 +725,7 @@ std::complex<double> L_Cc0_k2 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH))/(32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW *(-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Mu_w(2) * set_yd_z(j) * set_yu_y(2) + set_Md_x(j) * set_yu_y(2) * set_yu_y(2))\
     + 4.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(2) * set_yu_y(2)))\
-       * V(2,i) * VC(2,j); 
+       * VCKM(2,i) * VCKMC(2,j); 
 }
 
 // （貳拾叁）计算 L_Cc0_k3 的函数
@@ -742,7 +733,7 @@ std::complex<double> L_Cc0_k3 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH))/(32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW *(-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Mu_w(3) * set_yd_z(j) * set_yu_y(3) + set_Md_x(j) * set_yu_y(3) * set_yu_y(3))\
     + 4.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(3) * set_yu_y(3)))\
-       * V(3,i) * VC(3,j); 
+       * VCKM(3,i) * VCKMC(3,j); 
 }
 
 // // （）计算 L_Cc0 总和
@@ -755,7 +746,7 @@ std::complex<double> L_Cc1_k1 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(1) * set_yu_y(1))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Md_x(i) * set_yd_z(i) * set_yd_z(j) + set_Md_x(j) * set_yu_y(1) * set_yu_y(1)))\
-         * V(1,i) * VC(1,j);
+         * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （貳拾伍）计算 L_Cc1_k2 的函数
@@ -763,7 +754,7 @@ std::complex<double> L_Cc1_k2 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(2) * set_yu_y(2))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Md_x(i) * set_yd_z(i) * set_yd_z(j) + set_Md_x(j) * set_yu_y(2) * set_yu_y(2)))\
-         * V(2,i) * VC(2,j);
+         * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （貳拾陆）计算 L_Cc1_k3 的函数
@@ -771,7 +762,7 @@ std::complex<double> L_Cc1_k3 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * (set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(3) * set_yu_y(3))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (-set_Md_x(i) * set_yd_z(i) * set_yd_z(j) + set_Md_x(j) * set_yu_y(3) * set_yu_y(3)))\
-         * V(3,i) * VC(3,j);
+         * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Cc1 总和
@@ -784,7 +775,7 @@ std::complex<double> L_Cc2_k1 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yu_y(1) * set_yu_y(1))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * (2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （貳拾捌）计算 L_Cc2_k2 的函数
@@ -792,7 +783,7 @@ std::complex<double> L_Cc2_k2 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH))/(32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yu_y(2) * set_yu_y(2))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * (2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （貳拾玖）计算 L_Cc2_k3 的函数
@@ -800,7 +791,7 @@ std::complex<double> L_Cc2_k3 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH))/(32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(j) * set_yu_y(3) * set_yu_y(3))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI * (2.0 * set_Md_x(i) * set_Md_x(j) * set_yd_z(i) - set_Md_x(j) * set_Mu_w(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Cc2 总和
@@ -815,7 +806,7 @@ std::complex<double> L_Cd0_k1 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(1) * set_yd_z(j) * set_yu_y(1))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI *((-2.0 * set_Md_x(j) * set_Md_x(j) + 2.0 * MH5 * MH5 - set_Md_x(i) * set_Md_x(i) + set_Mu_w(1) * set_Mu_w(1)) * set_yd_z(j) + 2.0 * set_Md_x(j) * set_Mu_w(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j); 
+        * VCKM(1,i) * VCKMC(1,j); 
 }
 
 // （叁拾壹）计算 L_Cd0_k2 的函数
@@ -823,7 +814,7 @@ std::complex<double> L_Cd0_k2 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(2) * set_yd_z(j) * set_yu_y(2))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI *((-2.0 * set_Md_x(j) * set_Md_x(j) + 2.0 * MH5 * MH5 - set_Md_x(i) * set_Md_x(i) + set_Mu_w(2) * set_Mu_w(2)) * set_yd_z(j) + 2.0 * set_Md_x(j) * set_Mu_w(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j); 
+        * VCKM(2,i) * VCKMC(2,j); 
 }
 
 // （叁拾贰）计算 L_Cd0_k3 的函数
@@ -831,7 +822,7 @@ std::complex<double> L_Cd0_k3 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0 * LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Mu_w(3) * set_yd_z(j) * set_yu_y(3))\
     + 2.0 * std::sqrt(2.0) * alpha * M_PI *((-2.0 * set_Md_x(j) * set_Md_x(j) + 2.0 * MH5 * MH5 - set_Md_x(i) * set_Md_x(i) + set_Mu_w(3) * set_Mu_w(3)) * set_yd_z(j) + 2.0 * set_Md_x(j) * set_Mu_w(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j); 
+        * VCKM(3,i) * VCKMC(3,j); 
 }
 
 // // （）计算 L_Cd0 总和
@@ -844,7 +835,7 @@ std::complex<double> L_Cd1_k1 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * ((2.0 * MH5 * MH5 - set_Md_x(i) * set_Md_x(i)) * set_yd_z(j) + set_Md_x(j) * set_Mu_w(1) * set_yu_y(1))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(1) * set_yu_y(1)))\
-        * V(1,i) * VC(1,j);
+        * VCKM(1,i) * VCKMC(1,j);
 }
 
 // （叁拾肆）计算 L_Cd1_k2 的函数
@@ -852,7 +843,7 @@ std::complex<double> L_Cd1_k2 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * ((2.0 * MH5 * MH5 - set_Md_x(i) * set_Md_x(i)) * set_yd_z(j) + set_Md_x(j) * set_Mu_w(2) * set_yu_y(2))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(2) * set_yu_y(2)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （叁拾伍）计算 L_Cd1_k3 的函数
@@ -860,7 +851,7 @@ std::complex<double> L_Cd1_k3 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (2.0 * std::sqrt(2.0) * alpha * M_PI * ((2.0 * MH5 * MH5 - set_Md_x(i) * set_Md_x(i)) * set_yd_z(j) + set_Md_x(j) * set_Mu_w(3) * set_yu_y(3))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j) - set_Md_x(j) * set_yu_y(3) * set_yu_y(3)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Cd1 总和
@@ -873,7 +864,7 @@ std::complex<double> L_Cd2_k1 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (-2.0 * std::sqrt(2.0) * alpha * M_PI * ((2.0 * set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + set_Md_x(i) * set_Md_x(i)) * set_yd_z(j))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j)))\
-        * V(1,i) * VC(1,j); 
+        * VCKM(1,i) * VCKMC(1,j); 
 }
 
 // （叁拾柒）计算 L_Cd2_k2 的函数
@@ -881,7 +872,7 @@ std::complex<double> L_Cd2_k2 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (-2.0 * std::sqrt(2.0) * alpha * M_PI * ((2.0 * set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + set_Md_x(i) * set_Md_x(i)) * set_yd_z(j))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j)))\
-        * V(2,i) * VC(2,j);
+        * VCKM(2,i) * VCKMC(2,j);
 }
 
 // （叁拾捌）计算 L_Cd2_k3 的函数
@@ -889,7 +880,7 @@ std::complex<double> L_Cd2_k3 (int i, int j){
     return ((std::cos(thetaH) * std::sin(thetaH)) / (32.0 * std::sqrt(3.0) * M_PI * M_PI * SW * SW))\
     * (-2.0 * std::sqrt(2.0) * alpha * M_PI * ((2.0 * set_Md_x(j) * set_Md_x(j) - 2.0 * MH5 * MH5 + set_Md_x(i) * set_Md_x(i)) * set_yd_z(j))\
     + std::cos(thetaH) * SW * SW * (-2.0 * std::cos(thetaH) * std::cos(thetaH) * LAMBDA_5() * vacuum + std::sin(thetaH) * (std::sqrt(2.0) * M1 - 6.0 * std::sqrt(2.0) * M2 + (-2.0  *LAMBDA_3() + LAMBDA_5()) * std::sin(thetaH) * vacuum)) * (set_Md_x(i) * set_yd_z(i) * set_yd_z(j)))\
-        * V(3,i) * VC(3,j);
+        * VCKM(3,i) * VCKMC(3,j);
 }
 
 // // （）计算 L_Cd2 总和
