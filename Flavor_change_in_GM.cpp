@@ -2173,13 +2173,99 @@ std::complex<double> xi_ij_L (int i, int j, GM_model&m) {
            + L_Cd2_k1_value * F_Cd_21_value + L_Cd2_k2_value * F_Cd_22_value + L_Cd2_k3_value * F_Cd_23_value; 
 }
 
-//几个衰变分支比的函数
+//下面涉及到的质量Mb，Mc，
+//B介子衰变产生函数Br(B -> Xs phi)/Br(B -> Xc e nu) 
+//注意：其中最后abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b])中xi是xi_bs
+std::complex<double> Br_B_Meson (int i, int j, GM_model&m) {
+
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+    
+    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc )/ (Mb * Mb)) + ((Mc * Mc )/ (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b]) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b])
+}
+
+//K介子产生Ms，Mk，Mpai，Md,GF,Gamma_k,P_0_PHI,EL
+std::complex<double> Br_Kaon (int i, int j, GM_model&m) {
+
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return (1.0 / Gamma_k) * (2.0 * P_0_PHI / Mk) * ( abs(sqrt(GF) * 4 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (int i, int j, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) * abs(sqrt(GF) * 4 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (int i, int j, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) / (16.0 * M_PI * Mk))
+}
+
+// //Eta介子产生Mu，Md，Meta,Gamma_eta(!!!没敲完)
+// std::complex<double> Br_Kaon (int i, int j, GM_model&m) {
+
+//     thetaH = m.thetaH;
+//     MH3 = m.MH3;
+//     MH5 = m.MH5;
+//     LAMBDA_3() = m.LAMBDA_3();
+//     LAMBDA_5() = m.LAMBDA_5();
+//     M1 = m.M1;
+//     M2 = m.M2;
+//     double angleInDegrees = -13.0;
+//     double angleInRadians = angleInDegrees * M_PI / 180;
+//     double sinValue = sin(angleInRadians);
+//     double cosValue = cos(angleInRadians);
+
+//     return (1.0 / Gamma_eta) * (2.0 * P_0_PHI / Meta) * (abs((-1.0 / vacuum) * (Mu * ?) *((cosValue +- sqrt(2.0) * sinValue) / sqrt(3.0)) * 2.6) * abs() / (16.0 * M_PI * Meta))
+// }
+
+//Semileptonic Decay of Mesons Mx,Mmu
+std::complex<double> Br_Semileptonic (int i, int j, GM_model&m) {
+
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return ((sqrt(2.0) * GF * Mx * Mx * Mx * Mx * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mx *Mx)) * (1.0 - (Mmu * Mmu) / (Mx *Mx)))) * BR(x -> mu nu) * (((1.0 - 8.0 * ((MH5 * MH5 )/ (Mx * Mx)) + ((MH5 * MH5 )/ (Mx * Mx)) * ((MH5 * MH5 )/ (Mx * Mx)))) * (1.0 - ((MH5 * MH5 ) / (Mx * Mx)) * ((MH5 * MH5 ) / (Mx * Mx))) - 12.0 * log(((MH5 * MH5 ) / (Mx * Mx)) * ((MH5 * MH5 ) / (Mx * Mx)))) * (7.0 / 9.0) *(7.0 / 9.0)
+}
 
 int main() {
-    //调用xi的函数，调用衰变分支比的函数
     ltini();
-    ifstream 
-    // 输出所有变量和计算结果
-    std::cout << xi_ij_L << "," << xi_ij_R << std::endl;
+    ifstream
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+    // 调用衰变分支比函数
+    std::complex<double> Br_B_Meson_value = Br_B_Meson (i, j, GM_model&m);
+    std::complex<double> Br_Kaon_value = Br_Kaon (i, j, GM_model&m);
+    std::complex<double> Br_Semileptonic_value = Br_Semileptonic (i, j, GM_model&m);
+
+    std::ofstream outputFile("home/outputresult.txt");
+    // 将结果写入文件
+    if (outputFile.is_open()) {
+        outputFile << "thetaH = " << thetaH << std::endl;
+        outputFile << "MH3 = " << MH3 << std::endl;
+        outputFile << "MH5 = " << MH5 << std::endl;
+        outputFile << "M1 = " << M1 << std::endl;
+        outputFile << "M2 = " << M2 << std::endl;
+        outputFile << "Br_B_Meson_value = " << Br_B_Meson_value << std::endl;
+        outputFile << "Br_Kaon_value = " << Br_Kaon_value << std::endl;
+        outputFile << "Br_Semileptonic_value = " << Br_Semileptonic_value << std::endl;
+        outputFile.close();
+        std::cout << "Calculation has been written to outputresult.txt." << std::endl;
+    } else {
+        std::cerr << "There is somthing wrong to open file";
+    }
+    return 0;
     }
     ltexi();
