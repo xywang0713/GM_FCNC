@@ -17,6 +17,23 @@
 // 定义全局变量
 std::complex<double> alpha(1/137, 0.0), SW(0.2223, 0.0), vacuum(246.0, 0.0);
 double MW = 80.399;
+double Mb = 4.18;
+double Ms = 93.4e-3;
+double Md = 4.67e-3;
+double Mu = 2.16e-3;
+double Mc = 1.27;
+double Mk = 0.493667; 
+double Mpai=0.13957039;
+double Meta=0.547862;
+double Mmu =0.1056583755;
+double MD=1.86966;
+double MDs=1.96835;
+double MB=5.27934;
+double Gamma_k=5.3167366721e-17;
+double Gamma_eta=1.31e-6; 
+double GF=1.166364e-5;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ;
+double EL =;
+
 
 //写class
 class GM_model{
@@ -66,6 +83,7 @@ public:
          return (2.0 * std::sin(thetaH) * MH3 * MH3 - std::sqrt(2.0) * M1 * vacuum) / (vacuum * std::sin(thetaH));
     }
 
+
 //Potential里的参数
 public:
     double LAMBDA_1;
@@ -79,6 +97,19 @@ public:
     double M2;
 }
 
+//计算k—>pai H5的 p_H5^0
+std::complex<double> P_0_PHI(GM_model&m) {
+
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return sqrt((Mk * Mk + Mpai * Mpai - MH5 * MH5) * (Mk * Mk + Mpai * Mpai - MH5 * MH5) / (4.0 * Mk * Mk) - Mpai * Mpai);
+}
 
 // 计算 yd(z) 的函数
 std::complex<double> set_yd_z(int z, GM_model&m) {
@@ -2186,7 +2217,7 @@ std::complex<double> Br_B_Meson (int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
     
-    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc )/ (Mb * Mb)) + ((Mc * Mc )/ (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b]) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b])
+    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc) / (Mb * Mb)) + ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b]) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b])
 }
 
 //K介子产生Ms，Mk，Mpai，Md,GF,Gamma_k,P_0_PHI,EL
@@ -2203,26 +2234,11 @@ std::complex<double> Br_Kaon (int i, int j, GM_model&m) {
     return (1.0 / Gamma_k) * (2.0 * P_0_PHI / Mk) * ( abs(sqrt(GF) * 4 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (int i, int j, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) * abs(sqrt(GF) * 4 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (int i, int j, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) / (16.0 * M_PI * Mk))
 }
 
-// //Eta介子产生Mu，Md，Meta,Gamma_eta(!!!没敲完)
-// std::complex<double> Br_Kaon (int i, int j, GM_model&m) {
-
-//     thetaH = m.thetaH;
-//     MH3 = m.MH3;
-//     MH5 = m.MH5;
-//     LAMBDA_3() = m.LAMBDA_3();
-//     LAMBDA_5() = m.LAMBDA_5();
-//     M1 = m.M1;
-//     M2 = m.M2;
-//     double angleInDegrees = -13.0;
-//     double angleInRadians = angleInDegrees * M_PI / 180;
-//     double sinValue = sin(angleInRadians);
-//     double cosValue = cos(angleInRadians);
-
-//     return (1.0 / Gamma_eta) * (2.0 * P_0_PHI / Meta) * (abs((-1.0 / vacuum) * (Mu * ?) *((cosValue +- sqrt(2.0) * sinValue) / sqrt(3.0)) * 2.6) * abs() / (16.0 * M_PI * Meta))
-// }
 
 //Semileptonic Decay of Mesons Mx,Mmu
-std::complex<double> Br_Semileptonic (int i, int j, GM_model&m) {
+//BR（X->munu)
+//1.BR(pai+ -> munu)
+std::complex<double> Br_Semileptonic_pai(int i, int j, GM_model&m) {
 
     thetaH = m.thetaH;
     MH3 = m.MH3;
@@ -2232,7 +2248,49 @@ std::complex<double> Br_Semileptonic (int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return ((sqrt(2.0) * GF * Mx * Mx * Mx * Mx * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mx *Mx)) * (1.0 - (Mmu * Mmu) / (Mx *Mx)))) * BR(x -> mu nu) * (((1.0 - 8.0 * ((MH5 * MH5 )/ (Mx * Mx)) + ((MH5 * MH5 )/ (Mx * Mx)) * ((MH5 * MH5 )/ (Mx * Mx)))) * (1.0 - ((MH5 * MH5 ) / (Mx * Mx)) * ((MH5 * MH5 ) / (Mx * Mx))) - 12.0 * log(((MH5 * MH5 ) / (Mx * Mx)) * ((MH5 * MH5 ) / (Mx * Mx)))) * (7.0 / 9.0) *(7.0 / 9.0)
+    return ((sqrt(2.0) * GF * Mpai * Mpai * Mpai * Mpai * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mx *Mx)) * (1.0 - (Mmu * Mmu) / (Mpai * Mpai)))) * 0.999877 * (((1.0 - 8.0 * ((MH5 * MH5 ) / (Mpai * Mpai)) + ((MH5 * MH5 )/ (Mpai * Mpai)) * ((MH5 * MH5 )/ (Mpai * Mpai)))) * (1.0 - ((MH5 * MH5 ) / (Mpai * Mpai)) * ((MH5 * MH5 ) / (Mpai * Mpai))) - 12.0 * log(((MH5 * MH5 ) / (Mpai * Mpai)) * ((MH5 * MH5 ) / (Mpai * Mpai)))) * (7.0 / 9.0) *(7.0 / 9.0);
+}
+
+//2.BR(K+ -> munu)
+std::complex<double> Br_Semileptonic_k(int i, int j, GM_model&m) {
+
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return ((sqrt(2.0) * GF * Mk * Mk * Mk * Mk * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mk *Mk)) * (1.0 - (Mmu * Mmu) / (Mk *Mk)))) * 0.6356 * (((1.0 - 8.0 * ((MH5 * MH5 ) / (Mk * Mk)) + ((MH5 * MH5 )/ (Mk * Mk)) * ((MH5 * MH5 )/ (Mk * Mk)))) * (1.0 - ((MH5 * MH5 ) / (Mk * Mk)) * ((MH5 * MH5 ) / (Mk * Mk))) - 12.0 * log(((MH5 * MH5 ) / (Mk * Mk)) * ((MH5 * MH5 ) / (Mk * Mk)))) * (7.0 / 9.0) *(7.0 / 9.0);
+}
+
+//3.BR(D+ -> munu)
+std::complex<double> Br_Semileptonic_D(int i, int j, GM_model&m) {
+
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return ((sqrt(2.0) * GF * MD * MD * MD * MD * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (MD *MD)) * (1.0 - (Mmu * Mmu) / (MD *MD)))) * std::pow(3.74,-4) * (((1.0 - 8.0 * ((MH5 * MH5 ) / (MD * MD)) + ((MH5 * MH5 )/ (MD * MD)) * ((MH5 * MH5 )/ (MD * MD)))) * (1.0 - ((MH5 * MH5 ) / (MD * MD)) * ((MH5 * MH5 ) / (MD * MD))) - 12.0 * log(((MH5 * MH5 ) / (MD * MD)) * ((MH5 * MH5 ) / (MD * MD)))) * (7.0 / 9.0) *(7.0 / 9.0);
+}
+
+//4.BR(Ds+ -> munu)
+std::complex<double> Br_Semileptonic_Ds(int i, int j, GM_model&m) {
+
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return ((sqrt(2.0) * GF * MDs * MDs *  MDs * MDs * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / ( MDs * MDs)) * (1.0 - (Mmu * Mmu) / ( MDs * MDs)))) * std::pow(5.43,-3) * (((1.0 - 8.0 * ((MH5 * MH5 ) / ( MDs * MDs)) + ((MH5 * MH5 )/ ( MDs * MDs)) * ((MH5 * MH5 )/ ( MDs * MDs)))) * (1.0 - ((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs))) - 12.0 * log(((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs)))) * (7.0 / 9.0) *(7.0 / 9.0);
 }
 
 int main() {
@@ -2248,7 +2306,10 @@ int main() {
     // 调用衰变分支比函数
     std::complex<double> Br_B_Meson_value = Br_B_Meson (i, j, GM_model&m);
     std::complex<double> Br_Kaon_value = Br_Kaon (i, j, GM_model&m);
-    std::complex<double> Br_Semileptonic_value = Br_Semileptonic (i, j, GM_model&m);
+    std::complex<double> Br_Semileptonic_pai_value = Br_Semileptonic_pai (i, j, GM_model&m);
+    std::complex<double> Br_Semileptonic_k_value = Br_Semileptonic_k (i, j, GM_model&m);
+    std::complex<double> Br_Semileptonic_D_value = Br_Semileptonic_D (i, j, GM_model&m);
+    std::complex<double> Br_Semileptonic_Ds_value = Br_Semileptonic_Ds (i, j, GM_model&m);
 
     std::ofstream outputFile("home/outputresult.txt");
     // 将结果写入文件
@@ -2260,7 +2321,10 @@ int main() {
         outputFile << "M2 = " << M2 << std::endl;
         outputFile << "Br_B_Meson_value = " << Br_B_Meson_value << std::endl;
         outputFile << "Br_Kaon_value = " << Br_Kaon_value << std::endl;
-        outputFile << "Br_Semileptonic_value = " << Br_Semileptonic_value << std::endl;
+        outputFile << "Br_Semileptonic_pai_value = " << Br_Semileptonic_pai_value << std::endl;
+        outputFile << "Br_Semileptonic_k_value = " << Br_Semileptonic_k_value << std::endl;
+        outputFile << "Br_Semileptonic_D_value = " << Br_Semileptonic_D_value << std::endl;
+        outputFile << "Br_Semileptonic_Ds_value = " << Br_Semileptonic_Ds_value << std::endl;
         outputFile.close();
         std::cout << "Calculation has been written to outputresult.txt." << std::endl;
     } else {
