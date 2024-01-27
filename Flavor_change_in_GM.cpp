@@ -240,19 +240,19 @@ double set_Mu_w(int w, GM_model&m) {
      if (r == 1 && s == 1) {
          return 0.974352;
      } else if (r == 1 && s == 2) {
-         return std::complex<double>(-0.224865 , 0.000136871);
-     } else if (r == 1 && s == 3) {
-         return std::complex<double>(0.00792247 , 0.00327);
-     } else if (r == 2 && s == 1) {
          return 0.224998;
+     } else if (r == 1 && s == 3) {
+         return std::complex<double>(0.0015275 , 0.00335899);
+     } else if (r == 2 && s == 1) {
+         return std::complex<double>(-0.224865 , 0.000136871);
      } else if (r == 2 && s == 2) {
          return std::complex<double>(0.973492 , 0.0000316065);
      } else if (r == 2 && s == 3) {
-         return std::complex<double>(-0.0410911 , 0.000755113);
+         return 0.0418197;
      } else if (r == 3 && s == 1 ) {
-         return std::complex<double>(0.0015275 , 0.00335899); 
+         return std::complex<double>(0.00792247 , 0.00327); 
      } else if (r == 3 && s == 2 ) {
-         return 0.0418197; 
+         return std::complex<double>(-0.0410911 , 0.000755113); 
      } else if (r == 3 && s == 3 ) { 
          return 0.999118;
      } else {
@@ -2217,7 +2217,7 @@ std::complex<double> Br_B_Meson (int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
     
-    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc) / (Mb * Mb)) + ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b]) * abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b])
+    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc) / (Mb * Mb)) + ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * std::norm(xi_ij_R (3, 2, GM_model&m) / VCKM[2,3]) * std::norm(xi_ij_R (3, 2, GM_model&m) / VCKM[2,3]);
 }
 
 //K介子产生Ms，Mk，Mpai，Md,GF,Gamma_k,P_0_PHI,EL
@@ -2231,7 +2231,7 @@ std::complex<double> Br_Kaon (int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return (1.0 / Gamma_k) * (2.0 * P_0_PHI / Mk) * ( abs(sqrt(GF) * 4 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (int i, int j, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) * abs(sqrt(GF) * 4 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (int i, int j, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) / (16.0 * M_PI * Mk))
+    return (1.0 / Gamma_k) * (2.0 * P_0_PHI / Mk) * ( std::norm(sqrt(GF) * 4.0 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (1, 2, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) * std::norm(sqrt(GF) * 4.0 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (1, 2, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) / (16.0 * M_PI * Mk))
 }
 
 
@@ -2248,7 +2248,7 @@ std::complex<double> Br_Semileptonic_pai(int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return ((sqrt(2.0) * GF * Mpai * Mpai * Mpai * Mpai * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mx *Mx)) * (1.0 - (Mmu * Mmu) / (Mpai * Mpai)))) * 0.999877 * (((1.0 - 8.0 * ((MH5 * MH5 ) / (Mpai * Mpai)) + ((MH5 * MH5 )/ (Mpai * Mpai)) * ((MH5 * MH5 )/ (Mpai * Mpai)))) * (1.0 - ((MH5 * MH5 ) / (Mpai * Mpai)) * ((MH5 * MH5 ) / (Mpai * Mpai))) - 12.0 * log(((MH5 * MH5 ) / (Mpai * Mpai)) * ((MH5 * MH5 ) / (Mpai * Mpai)))) * (7.0 / 9.0) *(7.0 / 9.0);
+    return ((sqrt(2.0) * GF * Mpai * Mpai * Mpai * Mpai * std::norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * std::norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mx *Mx)) * (1.0 - (Mmu * Mmu) / (Mpai * Mpai)))) * 0.999877 * (((1.0 - 8.0 * ((MH5 * MH5 ) / (Mpai * Mpai)) + ((MH5 * MH5 )/ (Mpai * Mpai)) * ((MH5 * MH5 )/ (Mpai * Mpai)))) * (1.0 - ((MH5 * MH5 ) / (Mpai * Mpai)) * ((MH5 * MH5 ) / (Mpai * Mpai))) - 12.0 * log(((MH5 * MH5 ) / (Mpai * Mpai)) * ((MH5 * MH5 ) / (Mpai * Mpai)))) * (7.0 / 9.0) *(7.0 / 9.0);
 }
 
 //2.BR(K+ -> munu)
@@ -2262,7 +2262,7 @@ std::complex<double> Br_Semileptonic_k(int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return ((sqrt(2.0) * GF * Mk * Mk * Mk * Mk * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mk *Mk)) * (1.0 - (Mmu * Mmu) / (Mk *Mk)))) * 0.6356 * (((1.0 - 8.0 * ((MH5 * MH5 ) / (Mk * Mk)) + ((MH5 * MH5 )/ (Mk * Mk)) * ((MH5 * MH5 )/ (Mk * Mk)))) * (1.0 - ((MH5 * MH5 ) / (Mk * Mk)) * ((MH5 * MH5 ) / (Mk * Mk))) - 12.0 * log(((MH5 * MH5 ) / (Mk * Mk)) * ((MH5 * MH5 ) / (Mk * Mk)))) * (7.0 / 9.0) *(7.0 / 9.0);
+    return ((sqrt(2.0) * GF * Mk * Mk * Mk * Mk * std:norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * std::norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (Mk *Mk)) * (1.0 - (Mmu * Mmu) / (Mk *Mk)))) * 0.6356 * (((1.0 - 8.0 * ((MH5 * MH5 ) / (Mk * Mk)) + ((MH5 * MH5 )/ (Mk * Mk)) * ((MH5 * MH5 )/ (Mk * Mk)))) * (1.0 - ((MH5 * MH5 ) / (Mk * Mk)) * ((MH5 * MH5 ) / (Mk * Mk))) - 12.0 * log(((MH5 * MH5 ) / (Mk * Mk)) * ((MH5 * MH5 ) / (Mk * Mk)))) * (7.0 / 9.0) *(7.0 / 9.0);
 }
 
 //3.BR(D+ -> munu)
@@ -2271,12 +2271,12 @@ std::complex<double> Br_Semileptonic_D(int i, int j, GM_model&m) {
     thetaH = m.thetaH;
     MH3 = m.MH3;
     MH5 = m.MH5;
-    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_3() = m.LAMBDA_3();star
     LAMBDA_5() = m.LAMBDA_5();
     M1 = m.M1;
     M2 = m.M2;
 
-    return ((sqrt(2.0) * GF * MD * MD * MD * MD * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (MD *MD)) * (1.0 - (Mmu * Mmu) / (MD *MD)))) * std::pow(3.74,-4) * (((1.0 - 8.0 * ((MH5 * MH5 ) / (MD * MD)) + ((MH5 * MH5 )/ (MD * MD)) * ((MH5 * MH5 )/ (MD * MD)))) * (1.0 - ((MH5 * MH5 ) / (MD * MD)) * ((MH5 * MH5 ) / (MD * MD))) - 12.0 * log(((MH5 * MH5 ) / (MD * MD)) * ((MH5 * MH5 ) / (MD * MD)))) * (7.0 / 9.0) *(7.0 / 9.0);
+    return ((sqrt(2.0) * GF * MD * MD * MD * MD * std::norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * std::norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / (MD *MD)) * (1.0 - (Mmu * Mmu) / (MD *MD)))) * std::pow(3.74,-4) * (((1.0 - 8.0 * ((MH5 * MH5 ) / (MD * MD)) + ((MH5 * MH5 )/ (MD * MD)) * ((MH5 * MH5 )/ (MD * MD)))) * (1.0 - ((MH5 * MH5 ) / (MD * MD)) * ((MH5 * MH5 ) / (MD * MD))) - 12.0 * log(((MH5 * MH5 ) / (MD * MD)) * ((MH5 * MH5 ) / (MD * MD)))) * (7.0 / 9.0) *(7.0 / 9.0);
 }
 
 //4.BR(Ds+ -> munu)
@@ -2290,7 +2290,7 @@ std::complex<double> Br_Semileptonic_Ds(int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return ((sqrt(2.0) * GF * MDs * MDs *  MDs * MDs * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * abs(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / ( MDs * MDs)) * (1.0 - (Mmu * Mmu) / ( MDs * MDs)))) * std::pow(5.43,-3) * (((1.0 - 8.0 * ((MH5 * MH5 ) / ( MDs * MDs)) + ((MH5 * MH5 )/ ( MDs * MDs)) * ((MH5 * MH5 )/ ( MDs * MDs)))) * (1.0 - ((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs))) - 12.0 * log(((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs)))) * (7.0 / 9.0) *(7.0 / 9.0);
+    return ((sqrt(2.0) * GF * MDs * MDs *  MDs * MDs * std:norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * std:norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / ( MDs * MDs)) * (1.0 - (Mmu * Mmu) / ( MDs * MDs)))) * std::pow(5.43,-3) * (((1.0 - 8.0 * ((MH5 * MH5 ) / ( MDs * MDs)) + ((MH5 * MH5 )/ ( MDs * MDs)) * ((MH5 * MH5 )/ ( MDs * MDs)))) * (1.0 - ((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs))) - 12.0 * log(((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs)))) * (7.0 / 9.0) *(7.0 / 9.0);
 }
 
 int main() {
@@ -2311,7 +2311,7 @@ int main() {
     std::complex<double> Br_Semileptonic_D_value = Br_Semileptonic_D (i, j, GM_model&m);
     std::complex<double> Br_Semileptonic_Ds_value = Br_Semileptonic_Ds (i, j, GM_model&m);
 
-    std::ofstream outputFile("home/outputresult.txt");
+    std::ofstream outputFile("/home/wang/Desktop/FCNC_GM/GM_FCNC/outputresult.txt");
     // 将结果写入文件
     if (outputFile.is_open()) {
         outputFile << "thetaH = " << thetaH << std::endl;
