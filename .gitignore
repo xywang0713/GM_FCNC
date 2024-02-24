@@ -1,2 +1,12 @@
 *.o
 *.x
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*synctex*
+*.toc
+GM_FCNC.pdf

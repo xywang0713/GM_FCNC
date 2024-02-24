@@ -1,0 +1,283 @@
+\documentclass[12pt]{article}
+\pdfoutput=1 % if your are submitting a pdflatex (i.e. if you have images in pdf, png or jpg format)
+
+\usepackage{jheppub} % for details on the use of the package, please see the JHEP-author-manual
+\usepackage{graphicx}  % needed for figures
+\usepackage{dcolumn}   % needed for some tablese$\cdot$cm
+\usepackage{bm}        % for math
+\usepackage{amssymb}   % for math
+\usepackage{subfigure}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{slashed}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{footnote}
+\usepackage{amsmath}
+\allowdisplaybreaks[4]
+\usepackage{accents}
+\newlength{\dhatheight}
+\newcommand{\doublehat}[1]{%
+    \settoheight{\dhatheight}{\ensuremath{\hat{#1}}}%
+    \addtolength{\dhatheight}{-0.35ex}%
+    \hat{\vphantom{\rule{1pt}{\dhatheight}}%
+    \smash{\hat{#1}}}}
+\newcommand{\ycwu}[1]{{\bf \color{red} yc: #1}}
+\usepackage{hyperref}
+% autoref configuration
+\def\figureautorefname~#1\null{Fig.\,#1\null}
+\def\tableautorefname~#1\null{Tab.\,#1\null}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\def\equationautorefname~#1\null{Eq.\,(#1)\null}
+
+\title{The FCNC Coupling in GM model}
+\author[a]{ Xinyu Wang}
+\author[a]{ Yongcheng Wu}
+\affiliation[a]{Department of Physics and Institute of Theoretical Physics, Nanjing Normal University, Nanjing, 210023, China}
+% \affiliation[b]{Institute-b}
+% \affiliation[c]{Institute-c}
+% \affiliation[d]{Institute-d}
+\emailAdd{xxxxxx}
+\emailAdd{ycwu@njnu.edu.cn}
+
+
+%\date{\today}
+
+\abstract{
+This is the document containing some details of the calculation of FCNC couplings in GM model. Furhter the FCNC couplings are used to predict the production and decay rate of light scalars in GM model. This is kept as a reference for the corresponding code.
+}
+
+
+\begin{document}
+\titlepage
+\maketitle
+\newpage
+
+\flushbottom
+
+\section{The Model}
+
+In the GM model, along with the standard scalar doublet, we have two extra triplets. In bi-doublet and bi-triplet form, these fields are given as
+\begin{align}
+\Phi &= \begin{pmatrix}
+    \phi^{0*} & \phi^+ \\
+    -\phi^{+*} & \phi^0
+\end{pmatrix}\\
+ X &= \begin{pmatrix}
+    \chi^{0*} & \xi^+ & \chi^{++} \\
+    -\chi^{+*} & \xi^0 & \chi^+ \\
+    \chi^{++*} & -\xi^{+*} & \chi^0
+\end{pmatrix}
+\end{align}
+The vevs are given by
+\begin{align}
+    \langle\Phi\rangle = \frac{v_\phi}{\sqrt{2}}\mathbb{I}_{2\times2},\quad \langle X\rangle = v_\chi\mathbb{I}_{2\times2}
+\end{align}
+
+The most general gauge-invariant scalar potential conserving custodial symmetry is given by
+\begin{align}
+    \label{equ:V0}
+    V_0 &= \frac{\mu_2^2}{2}{\rm Tr}(\Phi^\dagger\Phi)+\frac{\mu_3^2}{2}{\rm Tr}(X^\dagger X) + \lambda_1\left({\rm Tr}(\Phi^\dagger\Phi)\right)^2 + \lambda_2{\rm Tr}(\Phi^\dagger\Phi){\rm Tr}(X^\dagger X) \nonumber \\
+    & \qquad + \lambda_3{\rm Tr}(X^\dagger X X^\dagger X) + \lambda_4\left({\rm Tr}(X^\dagger X)\right)^2 - \lambda_5{\rm Tr}(\Phi^\dagger \tau^a\Phi\tau^b){\rm Tr}(X^\dagger t^a X t^b) \nonumber \\
+    &\qquad- M_1 {\rm Tr}(\Phi^\dagger \tau^a \Phi \tau^b)(UXU^\dagger)_{ab} - M_2 {\rm Tr}(X^\dagger t^a X t^b)(UXU^\dagger)_{ab}
+\end{align}
+where $\tau^a=\sigma^a/2$ with $\sigma^a$ being the Pauli matrices. The generators for the triplet representation are given as
+\begin{align}
+    t^1 = \frac{1}{\sqrt{2}}\begin{pmatrix}
+        0 & 1 & 0 \\
+        1 & 0 & 1 \\
+        0 & 1 & 0
+    \end{pmatrix}, \quad t^2=\frac{1}{\sqrt{2}}\begin{pmatrix}
+        0 & -i & 0 \\
+        i & 0 & -i \\
+        0 & i & 0
+    \end{pmatrix}, \quad t^3=\begin{pmatrix}
+        1 & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 0 & -1
+    \end{pmatrix}.
+\end{align}
+The matrix $U$ rotates $X$ into the Cartesian basis and is given by
+\begin{align}
+    U = \begin{pmatrix}
+        -\frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}}\\
+        -\frac{i}{\sqrt{2}} & 0 & -\frac{i}{\sqrt{2}}\\
+        0 & 1 & 0
+    \end{pmatrix}.
+\end{align}
+After the electroweak symmetry breaking, the scalar fields will acquire vevs as indicated above. The physical fields will be fluctuations around the vacuum, and we define
+\begin{align}
+    \phi^0 = \frac{v_\phi}{\sqrt{2}} + \frac{\phi^{0,r}+i\phi^{0,i}}{\sqrt{2}}, \quad \chi^0 = v_\chi + \frac{\chi^{0,r}+i\chi^{0,i}}{\sqrt{2}}, \quad \xi^0 = v_\chi + \xi^0
+\end{align}
+As we will discussed later, the vevs satisfy
+\begin{align}
+    v_\phi^2 + 8v_\chi^2 = v^2 = (246\,{\rm GeV})^2
+\end{align}
+Hence, we introduce the angle $\theta_H$ defined as
+\begin{align}
+    \cos\theta_H = \frac{v_\phi}{v},\quad \sin\theta_H = \frac{2\sqrt{2}v_\chi}{v}
+\end{align}
+
+\subsection{Stationary condition}
+
+In terms of the vevs, the scalar potential is given by
+\begin{align}
+\label{equ:Vvev}
+V(v_\phi,v_\chi) = \frac{1}{2}\mu_2^2v_\phi^2+\frac{3}{2}\mu_3^2v_\chi^2 + \lambda_1 v_\phi^4 + \frac{3}{2}(2\lambda_2-\lambda_5)v_\phi^2v_\chi^2 + 3(\lambda_3 + 3\lambda_4)v_\chi^4 - \frac{3}{4}M_1v_\phi^2v_\chi - 6M_2v_\chi^3
+\end{align}
+
+The vevs are determined by the minimum position of~\autoref{equ:Vvev}:
+\begin{align}
+    \label{equ:stationary_condition}
+    \begin{cases}
+    \frac{\partial V}{\partial v_\phi} = 0 \\
+    \frac{\partial V}{\partial v_\chi} = 0
+    \end{cases} \Rightarrow \begin{cases}
+    \mu_2^2 = -4\lambda_1v_\phi^2+3(\lambda_5-2\lambda_2)v_\chi^2 + \frac{3}{2}M_1v_\chi\\
+    \mu_3^2 = (\lambda_5-2\lambda_2)v_\phi^2-4(\lambda_3+3\lambda_4)v_\chi^2+\frac{M_1v_\phi^2}{4v_\chi}+6M_2v_\chi
+    \end{cases}
+\end{align}
+
+
+\subsection{The scalar mass and physical parameters}
+The mass of the scalars are determined by the quadratic terms of the potential. After electroweak symmetry breaking, in current case, we preserve the custodial symmetry. The scalars are grouped into different multiplets under the custodial symmetry:
+\begin{subequations}
+    \begin{align}
+        H_5^{\pm\pm} &= \chi^{\pm\pm}\\
+        H_5^\pm &= \frac{\chi^\pm-\xi^\pm}{\sqrt{2}}\\
+        H_5^0 &= \sqrt{\frac{2}{3}}\xi^0 - \sqrt{\frac{1}{3}}\chi^{0,r}\\
+        H_3^\pm &= - s_H \phi^\pm + c_H \frac{\chi^\pm+\xi^\pm}{\sqrt{2}}\\
+        H_3^0 &= -s_H \phi^{0,i} + c_H \chi^{0,i}\\
+        G^\pm &= c_H\phi^\pm + s_H\frac{\chi^\pm+\xi^\pm}{\sqrt{2}}\\
+        G^0 &= c_H \phi^{0,i} + s_H \chi^{0,i}\\
+        H_1^0 &= \phi^{0,r} \\
+        H_1^{0\prime} &= \sqrt{\frac{1}{3}}\xi^0 + \sqrt{\frac{2}{3}}\chi^{0,r}
+    \end{align}
+\end{subequations}
+The masses for the fiveplet and triplets are
+\begin{align}
+    m_5^2 &= \frac{M_1}{4v_\chi}v_\phi^2 + 12M_2v_\chi + \frac{3}{2}\lambda_5 v_\phi^2 + 8\lambda_3 v_\chi^2\\
+    m_3^2 &= \frac{M_1}{4v_\chi}(v_\phi^2+8v_\chi^2)+\frac{1}{2}\lambda_5 (v_\phi^2 + 8 v_\chi^2) = \left(\frac{M_1}{4v_\chi}+\frac{\lambda_5}{2}\right)v^2
+\end{align}
+The singlets listed above will further mix to form the mass eigenstates:
+\begin{align}
+\label{equ:mixing_singlet}
+\begin{pmatrix}
+    h\\
+    H
+\end{pmatrix} = \begin{pmatrix}
+    c_\alpha & -s_\alpha \\
+    s_\alpha & c_\alpha
+\end{pmatrix}\begin{pmatrix}
+    H_1^0\\
+    H_1^{0\prime}
+\end{pmatrix}
+\end{align}
+The mass matrix in the $(H_1^0, H_1^{0\prime})$ basis is
+\begin{align}
+\label{equ:mass_singlet}
+\mathcal{M}^2 = \begin{pmatrix}
+    8\lambda_1v_\phi^2 & \frac{\sqrt{3}}{2}v_\phi\left(-M_1+4(2\lambda_2 - \lambda_5)v_\chi\right)\\
+    \frac{\sqrt{3}}{2}v_\phi\left(-M_1+4(2\lambda_2 - \lambda_5)v_\chi\right) & \frac{M_1v_\phi^2}{4v_\chi}-6M_2v_\chi+8(\lambda_3+3\lambda_4)v_\chi^2
+\end{pmatrix}
+\end{align}
+On the other hand, $(h,H)$ are the mass eigenstates, hence the corresponding mass matrix is
+\begin{align}
+\label{equ:mass_singlet_diag}
+\mathcal{M}^2_E = \begin{pmatrix}
+    m_h^2 & 0 \\
+    0 & m_H^2
+\end{pmatrix}
+\end{align}
+The mass matrix in $(h,H)$ basis~\autoref{equ:mass_singlet_diag} and that in $(H_1^0,H_1^{0\prime})$~\autoref{equ:mass_singlet} are related by the mixing matrix in~\autoref{equ:mixing_singlet}:
+\begin{align}
+    R^T(\alpha)\mathcal{M}_E^2R(\alpha) &= \mathcal{M}^2\nonumber\\
+    \begin{pmatrix}
+        c_\alpha & s_\alpha \\
+        -s_\alpha & c_\alpha
+    \end{pmatrix}\begin{pmatrix}
+        m_h^2 & 0 \\
+        0 & m_H^2
+    \end{pmatrix}\begin{pmatrix}
+        c_\alpha & -s_\alpha \\
+        s_\alpha & c_\alpha
+    \end{pmatrix} &= \mathcal{M}^2\nonumber\\
+    \begin{pmatrix}
+        m_h^2c_\alpha^2+m_H^2s_\alpha^2 & s_\alpha c_\alpha (m_H^2-m_h^2)\\
+        s_\alpha c_\alpha (m_H^2-m_h^2) & m_h^2 s_\alpha^2 + m_H^2 c_\alpha^2
+    \end{pmatrix} &= \mathcal{M}^2
+\end{align}
+We would like to use the physical masses as input instead of $\lambda_i$'s. Hence we have the following five relationships:
+\begin{subequations}
+    \label{equ:masses}
+    \begin{align}
+        m_5^2 &= \frac{M_1}{4v_\chi}v_\phi^2 + 12M_2v_\chi + \frac{3}{2}\lambda_5 v_\phi^2 + 8\lambda_3 v_\chi^2\\
+        m_3^2 &= \left(\frac{M_1}{4v_\chi}+\frac{\lambda_5}{2}\right)v^2 \\
+        m_h^2c_\alpha^2 + m_H^2 s_\alpha^2 &= 8\lambda_1v_\phi^2 \\
+        m_h^2s_\alpha^2 + m_H^2 c_\alpha^2 &= \frac{M_1v_\phi^2}{4v_\chi}-6M_2v_\chi+8(\lambda_3+3\lambda_4)v_\chi^2\\
+        s_\alpha c_\alpha (m_H^2 - m_h^2) &= \frac{\sqrt{3}}{2}v_\phi\left(-M_1+4(2\lambda_2 - \lambda_5)v_\chi\right)
+    \end{align}
+\end{subequations}
+Then we have
+\begin{subequations}
+    \begin{align}
+        \lambda_1 &= \frac{m_h^2 c_\alpha^2 + m_H^2 s_\alpha^2}{8v_\phi^2}\\
+        \lambda_2 &= \frac{m_3^2}{v_\phi^2 + 8 v_\chi^2} + \frac{s_{2\alpha}}{8\sqrt{3}}\frac{m_H^2-m_h^2}{v_\phi v_\chi} - \frac{M_1}{8v_\chi}\\
+        \lambda_3 &= \frac{m_5^2}{8v_5^2} - \frac{3v_1^2}{8v_5^2}\frac{m_3^2}{v_1^2+8v_5^2} + \frac{v_\phi^2}{16v_\chi^2}\frac{M_1}{v_\chi} - \frac{3M_2}{2v_\chi}\\
+        \lambda_4 &= \frac{v_1^2}{8v_5^2}\frac{m_3^2}{v_1^2+8v_5^2}+\frac{m_h^2s_\alpha^2+m_H^2c_\alpha^2-m_5^2}{24v_5^2}-\frac{v_\phi^2}{32v_\chi^2}\frac{M_1}{v_\chi}+\frac{3M_2}{4v_\chi}\\
+        \lambda_5 &= \frac{2m_3^2}{v_1^2+8v_5^2} - \frac{M_1}{2v_\chi}
+    \end{align}
+\end{subequations}
+Together with~\autoref{equ:stationary_condition}, we can treat $\mu_2^2,\mu_3^2,\lambda_{1,\cdots,5}$ as functions of $(v_\phi,v_\chi,\alpha,m_h^2,m_H^2,m_3^2,m_5^2)$ (the zero-temperature physical quantities).
+
+Further, we will also need to provide the correct mass for gauge bosons which is obtained from the kinematic terms of the scalars:
+\begin{align}
+\mathcal{L}_K = \frac{1}{2}{\rm Tr}\left((D_\mu\Phi)^\dagger(D^\mu\Phi)\right) + \frac{1}{2}{\rm Tr}\left((D_\mu X)^\dagger (D^\mu X)\right)
+\end{align}
+At the stationary point (and zero temperature), we have the mass matrix for the gauge bosons in basis $(W_1,W_2,W_3,B)$
+\begin{align}
+    \mathcal{M}_G^2 = \frac{1}{4}(v_1^2+8v_5^2)\begin{pmatrix}
+        g^2 & 0 & 0 & 0 \\
+        0 & g^2 & 0 & 0 \\
+        0 & 0 & g^2 & -g^2t_{\theta_w} \\
+        0 & 0 & -g^2t_{\theta_w} & g^2t_{\theta_w}^2
+    \end{pmatrix},
+\end{align}
+which provides a constraint at zero temperature as
+\begin{align}
+    v_1^2 + 8v_5^2 = v^2 = (246\,{\rm GeV})^2
+\end{align}
+Hence, we would like to introduce another parameter $\theta_H$ to parameterize the relation between $v_1$ and $v_5$:
+\begin{align}
+    \cos\theta_H \equiv \frac{v_1}{v},\qquad  \sin\theta_h \equiv \frac{2\sqrt{2}v_5}{v}
+\end{align}
+Then finally, we reach the full parameter set (at zero temperature) that will be used as input parameters for the model. All other parameters (either at zero temperature or at finite temperature) will be expressed in terms of this parameter set:
+\begin{align}
+    v(=246\,{\rm GeV}), s_H(\equiv \sin\theta_H), \alpha, m_h(=125\,{\rm GeV}), m_H, m_3, m_5
+\end{align}
+
+On the other hand, the vevs of the scalars also provide the mass for the fermions. In GM model, only the doublet can provide the mass for the fermions in the same way as in SM. Note that we ignore the contribution from the triplet for the neutrinos:
+\begin{align}
+    \mathcal{L}_Y = -y_u^i \bar{Q}_L^i\tilde{\phi}u_R - y_d^i \bar{Q}_L^i\phi d_R + h.c.
+\end{align}
+where, $\phi = (\phi_3+i\phi_4, \omega_1+\phi_1+i\phi_2)^T/\sqrt{2}$ is the doublet. In practice, we only consider the 3rd generation quarks, then we have
+\begin{align}
+    \mathcal{L}_Y^{3q} = -y_t \bar{Q}_L^3\tilde{\phi}t_R - y_b \bar{Q}_L^3 \phi b_R +h.c.
+\end{align}
+where $Q_L^3 = (t_L, b_L)^T$. The above Yukawa couplings provide the mass for the 3rd generation quarks after the Electroweak symmetry breaking at zero-temperature:
+\begin{align}
+    m_t = \frac{y_tv_1}{\sqrt{2}},\quad m_b = \frac{y_bv_1}{\sqrt{2}}.
+\end{align}
+
+
+
+
+% \begin{acknowledgments}
+% Acknowledgments
+% \end{acknowledgments}
+
+\bibliographystyle{bibsty}
+\bibliography{references}
+
+\end{document}
