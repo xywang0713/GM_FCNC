@@ -24,15 +24,17 @@ double Mu = 2.16e-3;
 double Mc = 1.27;
 double Mk = 0.493667; 
 double Mpai=0.13957039;
-double Meta=0.547862;
 double Mmu =0.1056583755;
 double MD=1.86966;
 double MDs=1.96835;
 double MB=5.27934;
-double Gamma_k=5.3167366721e-17;
-double Gamma_eta=1.31e-6; 
-double GF=1.166364e-5;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ;
-double EL =;
+double Gamma_k=5.3167366721e-17; 
+double MZ=91.1876;
+double M_Electron=0.510998955555e-3;
+double M_Muon=105.6583755e-3;//这里和上面的Mmu重复了
+double M_Tau=1776.86e-3;
+double alpha_ew=1/137;
+
 
 
 //写class
@@ -292,7 +294,7 @@ std::complex<double> RR_Bb (int i, int j, GM_model&m) {
 }
 
 // 计算 R_Ca 的函数
-//  (三) 计算 R_Ca0_k1 的函数
+//  (三) 计算 R_Ca0_k1 的函数，因为涉及到Mu（k）的求和，这里分别对k=1,2,3进行计算，命名后缀加上了k1,k2,k3
 std::complex<double> R_Ca0_k1 (int i, int j, GM_model&m) {
 
     thetaH = m.thetaH;
@@ -920,8 +922,6 @@ std::complex<double> LL_Bb (int i, int j, GM_model&m) {
     return (-alpha * std::cos(thetaH) * std::sin(thetaH) * set_yd_z(j) / (8.0 * std::sqrt(6.0) * M_PI * std::pow(SW,2))) * (VCKM(1,i) * VCKMC(1,j) + VCKM(2,i) * VCKMC(2,j) + VCKM(3,i) * VCKMC(3,j));
 }
 
-// 计算 L_Ca 的函数
-// 计算 L_Ca0 = L_Ca0_k1+L_Ca0_k2+L_Ca0_k3 的函数
 // （叁）计算 L_Ca0_k1 的函数
 std::complex<double> L_Ca0_k1 (int i, int j, GM_model&m) {
 
@@ -1049,8 +1049,6 @@ std::complex<double> L_Ca2_k3 (int i, int j, GM_model&m) {
 }
 
 
-// 计算 L_Cb 的函数
-// 计算 L_Cb0 = L_Cb0_k1+L_Cb0_k2+L_Cb0_k3 的函数
 // （拾贰）计算 L_Cb0_k1 的函数
 std::complex<double> L_Cb0_k1 (int i, int j, GM_model&m) {
 
@@ -1213,8 +1211,7 @@ std::complex<double> L_Cb2_k3 (int i, int j, GM_model&m) {
         * VCKM(3,i) * VCKMC(3,j);
 }
 
-// 计算 L_Cc 的函数
-// 计算 L_Cc0 = L_Cc0_k1+L_Cc0_k2+L_Cc0_k3 的函数
+
 // （貳拾壹）计算 L_Cc0_k1 的函数
 std::complex<double> L_Cc0_k1 (int i, int j, GM_model&m) {
 
@@ -1368,8 +1365,7 @@ std::complex<double> L_Cc2_k3 (int i, int j, GM_model&m) {
         * VCKM(3,i) * VCKMC(3,j);
 }
 
-// 计算 L_Cd 的函数
-// 计算 L_Cd0 = L_Cd0_k1+L_Cd0_k2+L_Cd0_k3 的函数
+
 // （叁拾）计算 L_Cd0_k1 的函数
 std::complex<double> L_Cd0_k1 (int i, int j, GM_model&m) {
 
@@ -1523,7 +1519,10 @@ std::complex<double> L_Cd2_k3 (int i, int j, GM_model&m) {
         * VCKM(3,i) * VCKMC(3,j);
 }
 
+
+//计算c函数
 // F_Ca_0
+//注意这里的F_Ca_01，第一个0代表C0函数的0,第二个1代表Mu（k）的k取1
 std::complex<double> F_Ca_01 (int i, int j, GM_model&m) {
 
     thetaH = m.thetaH;
@@ -1968,8 +1967,8 @@ std::complex<double> F_Cd_23 (int i, int j, GM_model&m) {
     return C0i(2,MH5*MH5,set_Md_x(j)*set_Md_x(j),set_Md_x(i)*set_Md_x(i),MW*MW,MH3*MH3,set_Mu_w(3)*set_Mu_w(3));
 }
 
-// 计算 xi_ij_R(i,j) 函数
-std::complex<double> xi_ij_R (int i, int j, GM_model&m) {
+// 计算 alpha_ij_R(i,j) 函数
+std::complex<double> alpha_ij_R (int i, int j, GM_model&m) {
 
     thetaH = m.thetaH;
     MH3 = m.MH3;
@@ -2086,8 +2085,8 @@ std::complex<double> xi_ij_R (int i, int j, GM_model&m) {
            + R_Cd2_k1_value * F_Cd_21_value + R_Cd2_k2_value * F_Cd_22_value + R_Cd2_k3_value * F_Cd_23_value;
 }
 
-//计算xi_ij_L(i,j)的函数
-std::complex<double> xi_ij_L (int i, int j, GM_model&m) {
+//计算beta_ij_L(i,j)的函数
+std::complex<double> beta_ij_L (int i, int j, GM_model&m) {
 
     thetaH = m.thetaH;
     MH3 = m.MH3;
@@ -2206,7 +2205,7 @@ std::complex<double> xi_ij_L (int i, int j, GM_model&m) {
 
 //下面涉及到的质量Mb，Mc，
 //B介子衰变产生函数Br(B -> Xs phi)/Br(B -> Xc e nu) 
-//注意：其中最后abs(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b])中xi是xi_bs
+//注意：其中最后norm(xi_ij_R (int i, int j, GM_model&m) / VCKM[c,b])中xi是xi_bs
 std::complex<double> Br_B_Meson (int i, int j, GM_model&m) {
 
     thetaH = m.thetaH;
@@ -2217,7 +2216,7 @@ std::complex<double> Br_B_Meson (int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
     
-    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc) / (Mb * Mb)) + ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * std::norm(xi_ij_R (3, 2, GM_model&m) / VCKM[2,3]) * std::norm(xi_ij_R (3, 2, GM_model&m) / VCKM[2,3]);
+    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc) / (Mb * Mb)) + ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * std::norm(alpha_ij_R (3, 2) /( Ms *VCKM[2,3])) * std::norm(alpha_ij_R (3, 2) /( Ms *VCKM[2,3])) ;
 }
 
 //K介子产生Ms，Mk，Mpai，Md,GF,Gamma_k,P_0_PHI,EL
@@ -2293,6 +2292,9 @@ std::complex<double> Br_Semileptonic_Ds(int i, int j, GM_model&m) {
     return ((sqrt(2.0) * GF * MDs * MDs *  MDs * MDs * std:norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW * MW)) * std:norm(EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW))) / (96.0 * M_PI *M_PI * Mmu * Mmu * (1.0 - (Mmu * Mmu) / ( MDs * MDs)) * (1.0 - (Mmu * Mmu) / ( MDs * MDs)))) * std::pow(5.43,-3) * (((1.0 - 8.0 * ((MH5 * MH5 ) / ( MDs * MDs)) + ((MH5 * MH5 )/ ( MDs * MDs)) * ((MH5 * MH5 )/ ( MDs * MDs)))) * (1.0 - ((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs))) - 12.0 * log(((MH5 * MH5 ) / ( MDs * MDs)) * ((MH5 * MH5 ) / ( MDs * MDs)))) * (7.0 / 9.0) *(7.0 / 9.0);
 }
 
+
+
+
 int main() {
     ltini();
     ifstream
@@ -2310,6 +2312,30 @@ int main() {
     std::complex<double> Br_Semileptonic_k_value = Br_Semileptonic_k (i, j, GM_model&m);
     std::complex<double> Br_Semileptonic_D_value = Br_Semileptonic_D (i, j, GM_model&m);
     std::complex<double> Br_Semileptonic_Ds_value = Br_Semileptonic_Ds (i, j, GM_model&m);
+    
+    
+    //调用H5衰变宽度函数
+    std::complex<double> GAMMA_gamma_value = GAMMA_gamma(GM_model&m);
+    std::complex<double> GAMMA_electron_value = GAMMA_electron(GM_model&m);
+    std::complex<double> GAMMA_muon_value = GAMMA_muon(GM_model&m);
+    std::complex<double> GAMMA_tau_value = GAMMA_tau(GM_model&m);
+    
+    std::complex<double> GAMMA_paipai_value
+
+    if (MH5 < 2) {
+        GAMMA_paipai_value = GAMMA_paipai(GM_model&m);
+    } else {
+        GAMMA_paipai_value = "wrong!";
+    }
+
+    std::complex<double> GAMMA_KK_value
+
+    if (MH5 < 2) {
+        GAMMA_KK_value = GAMMA_KK(GM_model&m);
+    } else {
+        GAMMA_KK_value = "wrong!";
+    }
+    
 
     std::ofstream outputFile("/home/wang/Desktop/FCNC_GM/GM_FCNC/outputresult.txt");
     // 将结果写入文件
@@ -2325,6 +2351,13 @@ int main() {
         outputFile << "Br_Semileptonic_k_value = " << Br_Semileptonic_k_value << std::endl;
         outputFile << "Br_Semileptonic_D_value = " << Br_Semileptonic_D_value << std::endl;
         outputFile << "Br_Semileptonic_Ds_value = " << Br_Semileptonic_Ds_value << std::endl;
+        outputFile << "GAMMA_gamma_value = " << GAMMA_gamma_value << std::endl;
+        outputFile << "GAMMA_electron_value = " << GAMMA_electron_value << std::endl;
+        outputFile << "GAMMA_muon_value = " << GAMMA_muon_value << std::endl;
+        outputFile << "GAMMA_tau_value = " << GAMMA_tau_value << std::endl;
+        outputFile << "GAMMA_paipai_value = " << GAMMA_paipai_value << std::endl;
+        outputFile << "GAMMA_KK_value = " << GAMMA_KK_value << std::endl;
+        
         outputFile.close();
         std::cout << "Calculation has been written to outputresult.txt." << std::endl;
     } else {
