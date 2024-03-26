@@ -25,7 +25,7 @@ std::complex<double> Br_B_Meson (int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
     
-    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc) / (Mb * Mb)) + ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * std::norm(alpha_ij_R (3, 2) /( Ms *VCKM[2,3])) * std::norm(alpha_ij_R (3, 2) /( Ms *VCKM[2,3])) ;
+    return (12.0 * M_PI * M_PI * vacuum * vacuum / (Mb * Mb)) * (1.0 - (MH5 * MH5) / (Mb * Mb)) * (1.0 / (((1.0 - 8.0 * ((Mc * Mc) / (Mb * Mb)) + ((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc )/ (Mb * Mb)))) * (1.0 - ((Mc * Mc) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))) - 12.0 * log(((Mc * Mc ) / (Mb * Mb)) * ((Mc * Mc ) / (Mb * Mb))))) * std::norm(down_alpha_ij_R (3, 2) /( Ms *VCKM[2,3])) * std::norm(down_alpha_ij_R (3, 2) /( Ms *VCKM[2,3])) ;
 }
 
 //K介子产生Ms，Mk，Mpai，Md,GF,Gamma_k,P_0_PHI,EL
@@ -39,7 +39,7 @@ std::complex<double> Br_Kaon (int i, int j, GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return (1.0 / Gamma_k) * (2.0 * P_0_PHI / Mk) * ( std::norm(sqrt(GF) * 4.0 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (1, 2, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) * std::norm(sqrt(GF) * 4.0 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (xi_ij_R (1, 2, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) / (16.0 * M_PI * Mk))
+    return (1.0 / Gamma_k) * (2.0 * P_0_PHI / Mk) * ( std::norm(sqrt(GF) * 4.0 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (down_alpha_ij_R (1, 2, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) * std::norm(sqrt(GF) * 4.0 * cbrt(2.0) * (EL * EL * vacuum * vacuum * std::sin(thetaH) / (4.0 * sqrt(3.0) * SW * SW * MW *MW)) * (7.0 * 3.1 * pow (10,-7) *(Mk* Mk +Mpai * Mpai-MH5 * MH5) / 18.0) + (down_alpha_ij_R (1, 2, GM_model&m) * Ms *0.96 /(2.0*vacuum)) *((Mk* Mk -Mpai * Mpai) / (Ms - Md))) / (16.0 * M_PI * Mk))
 }
 
 
@@ -243,11 +243,43 @@ std::complex<double> GAMMA_KK(GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return (GF / (4 * sqrt(2) * M_PI * MH5)) * sqrt(1 - 4 * Mpai * Mpai / (MH5 * MH5) ) * norm(((Mu * alpha_ij_R (1, 1) / Mu + Md * alpha_ij_R (1, 1) / Md)/(Mu + Md)) * 0.5 * Mpai * Mpai + (alpha_ij_R (2, 2) / Ms) * (Mk * Mk - 0.5 * Mpai * Mpai)) * norm(((Mu * alpha_ij_R (1, 1) / Mu + Md * alpha_ij_R (1, 1) / Md)/(Mu + Md)) * 0.5 * Mpai * Mpai + (alpha_ij_R (2, 2) / Ms) * (Mk * Mk - 0.5 * Mpai * Mpai));
+    return (GF / (4 * sqrt(2) * M_PI * MH5)) * sqrt(1 - 4 * Mpai * Mpai / (MH5 * MH5) ) * norm(((Mu * up_alpha_ij_R (1, 1) / Mu + Md * down_alpha_ij_R (1, 1) / Md)/(Mu + Md)) * 0.5 * Mpai * Mpai + (down_alpha_ij_R (2, 2) / Ms) * (Mk * Mk - 0.5 * Mpai * Mpai)) * norm(((Mu * up_alpha_ij_R (1, 1) / Mu + Md * down_alpha_ij_R (1, 1) / Md)/(Mu + Md)) * 0.5 * Mpai * Mpai + (down_alpha_ij_R (2, 2) / Ms) * (Mk * Mk - 0.5 * Mpai * Mpai));
 }
 
 //N0.4 mφ ≳ 2GeV 的轻标量衰变为夸克
-GAMMA_ll:GAMMA_ss:GAMMA_cc:GAMMA_bb=norm(alpha_lepton_i_R(i) / set_M_lepton_i(i)) * norm(alpha_lepton_i_R(i) / set_M_lepton_i(i)) * set_M_lepton_i(i) * set_M_lepton_i(i) * sqrt(1 - 4 * set_M_lepton_i(i) * set_M_lepton_i(i) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(i) * set_M_lepton_i(i) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(i) * set_M_lepton_i(i) / (MH5 * MH5)) \
-                                   :3 * norm(alpha_ij_R (2, 2) / Ms) * norm(alpha_ij_R (2, 2) / Ms) * Ms * Ms * sqrt(1 - 4 * Mk * Mk / (MH5 * MH5)) * sqrt(1 - 4 * Mk * Mk / (MH5 * MH5)) * sqrt(1 - 4 * Mk * Mk / (MH5 * MH5)) \
-                                   :3 * norm(alpha_ij_R (2, 2) / Mc) * norm(alpha_ij_R (2, 2) / Mc) * Mc * Mc * sqrt(1 - 4 * MD * MD / (MH5 * MH5)) * sqrt(1 - 4 * MD * MD / (MH5 * MH5)) * sqrt(1 - 4 * MD * MD / (MH5 * MH5)) \
-                                   :3 * norm(alpha_ij_R (3, 3) / Mb) * norm(alpha_ij_R (3, 3) / Mb) * Mb * Mb * sqrt(1 - 4 * MB * MB / (MH5 * MH5)) * sqrt(1 - 4 * MB * MB / (MH5 * MH5)) * sqrt(1 - 4 * MB * MB / (MH5 * MH5))
+std::complex<double> GAMMA_ss(GM_model&m) {
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return (3 * norm(down_alpha_ij_R (2, 2) / Ms) * down_norm(alpha_ij_R (2, 2) / Ms) * Ms * Ms * sqrt(1 - 4 * Mk * Mk / (MH5 * MH5)) * sqrt(1 - 4 * Mk * Mk / (MH5 * MH5)) * sqrt(1 - 4 * Mk * Mk / (MH5 * MH5))) * GAMMA_electron() / (norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * set_M_lepton_i(1) * set_M_lepton_i(1) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)));
+}
+
+std::complex<double> GAMMA_cc(GM_model&m) {
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return (3 * norm(up_alpha_ij_R (2, 2) / Mc) * up_norm(alpha_ij_R (2, 2) / Mc) * Mc * Mc * sqrt(1 - 4 * MD * MD / (MH5 * MH5)) * sqrt(1 - 4 * MD * MD / (MH5 * MH5)) * sqrt(1 - 4 * MD * MD / (MH5 * MH5))) * GAMMA_electron() / (norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * set_M_lepton_i(1) * set_M_lepton_i(1) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)));
+}
+
+//N0.4 mφ ≳ 2GeV 的轻标量衰变为夸克
+std::complex<double> GAMMA_bb(GM_model&m) {
+    thetaH = m.thetaH;
+    MH3 = m.MH3;
+    MH5 = m.MH5;
+    LAMBDA_3() = m.LAMBDA_3();
+    LAMBDA_5() = m.LAMBDA_5();
+    M1 = m.M1;
+    M2 = m.M2;
+
+    return (3 * norm(down_alpha_ij_R (3, 3) / Mb) * down_norm(alpha_ij_R (3, 3) / Mb) * Mb * Mb * sqrt(1 - 4 * MB * MB / (MH5 * MH5)) * sqrt(1 - 4 * MB * MB / (MH5 * MH5)) * sqrt(1 - 4 * MB * MB / (MH5 * MH5))) * GAMMA_electron() / (norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * set_M_lepton_i(1) * set_M_lepton_i(1) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)));
+}

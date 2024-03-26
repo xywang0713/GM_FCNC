@@ -47,6 +47,31 @@ int main() {
     } else {
         GAMMA_KK_value = "wrong!";
     }
+
+    std::complex<double> GAMMA_ss_value
+
+    if (MH5 > 2) {
+        GAMMA_ss_value = GAMMA_ss(GM_model&m);
+    } else {
+        GAMMA_ss_value = "wrong!";
+    }
+
+    std::complex<double> GAMMA_cc_value
+
+    if (MH5 > 2) {
+        GAMMA_cc_value = GAMMA_cc(GM_model&m);
+    } else {
+        GAMMA_cc_value = "wrong!";
+    }
+    
+    
+    std::complex<double> GAMMA_bb_value
+
+    if (MH5 > 2) {
+        GAMMA_bb_value = GAMMA_bb(GM_model&m);
+    } else {
+        GAMMA_bb_value = "wrong!";
+    }
     
 
     std::ofstream outputFile("/home/wang/Desktop/FCNC_GM/GM_FCNC/outputresult.txt");
@@ -69,7 +94,10 @@ int main() {
         outputFile << "GAMMA_tau_value = " << GAMMA_tau_value << std::endl;
         outputFile << "GAMMA_paipai_value = " << GAMMA_paipai_value << std::endl;
         outputFile << "GAMMA_KK_value = " << GAMMA_KK_value << std::endl;
-        
+        outputFile << "GAMMA_ss_value = " << GAMMA_ss_value << std::endl;
+        outputFile << "GAMMA_cc_value = " << GAMMA_cc_value << std::endl;
+        outputFile << "GAMMA_bb_value = " << GAMMA_bbvalue << std::endl;
+
         outputFile.close();
         std::cout << "Calculation has been written to outputresult.txt." << std::endl;
     } else {
