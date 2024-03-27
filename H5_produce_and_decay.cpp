@@ -268,7 +268,7 @@ std::complex<double> GAMMA_cc(GM_model&m) {
     M1 = m.M1;
     M2 = m.M2;
 
-    return (3 * norm(up_alpha_ij_R (2, 2) / Mc) * up_norm(alpha_ij_R (2, 2) / Mc) * Mc * Mc * sqrt(1 - 4 * MD * MD / (MH5 * MH5)) * sqrt(1 - 4 * MD * MD / (MH5 * MH5)) * sqrt(1 - 4 * MD * MD / (MH5 * MH5))) * GAMMA_electron() / (norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * set_M_lepton_i(1) * set_M_lepton_i(1) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)));
+    return (3 * norm(up_alpha_ij_R (2, 2) / Mc) * up_norm(alpha_ij_R (2, 2) / Mc) * Mc * Mc * sqrt(1 - 4 * MD0 * MD0 / (MH5 * MH5)) * sqrt(1 - 4 * MD0 * MD0 / (MH5 * MH5)) * sqrt(1 - 4 * MD0 * MD0 / (MH5 * MH5))) * GAMMA_electron() / (norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * norm(alpha_lepton_i_R(1) / set_M_lepton_i(1)) * set_M_lepton_i(1) * set_M_lepton_i(1) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)) * sqrt(1 - 4 * set_M_lepton_i(1) * set_M_lepton_i(1) / (MH5 * MH5)));
 }
 
 //N0.4 mφ ≳ 2GeV 的轻标量衰变为夸克

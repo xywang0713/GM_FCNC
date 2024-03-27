@@ -17,6 +17,7 @@ double MB=5.27934; //B
 double Gamma_k=5.3167366721e-17; ///K^{\pm} width
 double MZ=91.1876;
 double alpha_ew=1/137;
+double MD0=1864.84e-3;//D^0
 
 //写class
 class GM_model{
