@@ -1,5 +1,7 @@
 #include "GM.h"
 
+#include <cmath>
+
 bool GM::set_input3(double MHH, double MH3, double MH5, double sH, double sa, double M1, double M2) {
     // * theta_H in [0, pi/2]
     // * alpha in [-pi/2,pi/2]
@@ -46,3 +48,7 @@ bool GM::set_input3(double MHH, double MH3, double MH5, double sH, double sa, do
 
     return true;
 }
+
+double GM::get_Yu(Generation_t gen) { return sqrt(2.0) * m_m_ups[gen] / m_vphi; }
+double GM::get_Yd(Generation_t gen) { return sqrt(2.0) * m_m_downs[gen] / m_vphi; }
+double GM::get_Yl(Generation_t gen) { return sqrt(2.0) * m_m_leps[gen] / m_vphi; }

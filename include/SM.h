@@ -5,9 +5,10 @@
 
 #include "Constants.h"
 
+enum Generation_t { FIRST = 0, SECOND = 1, THIRD = 2 };
+
 class SM {
 public:
-    typedef unsigned Generation_t;
     SM();
 
     double get_MZ() const { return MZ; }
@@ -46,6 +47,7 @@ protected:
 
     double m_m_ups[3];
     double m_m_downs[3];
+    double m_m_leps[3];
     std::complex<double> m_VCKM[3][3];
 };
 

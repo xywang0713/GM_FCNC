@@ -35,6 +35,10 @@ public:
     double get_vphi() const { return m_vphi; }
     double get_vchi() const { return m_vchi; }
 
+    double get_Yu(Generation_t);
+    double get_Yd(Generation_t);
+    double get_Yl(Generation_t);
+
 private:
     double m_mu22, m_mu32, m_lam1, m_lam2, m_lam3, m_lam4, m_lam5, m_M1, m_M2;
     double m_MHL, m_MHH, m_MH3, m_MH5;
