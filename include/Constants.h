@@ -2,7 +2,7 @@
 #define GM_FCNC_CONST_H_
 
 #ifndef alpha_rev
-#define alpha_rev 127.9
+#define alpha_rev 137.0
 #endif
 
 #ifndef MZ
